@@ -4,7 +4,7 @@ uiuc-cs427-f24 Term Project Team #38
 <br/>
 | Name          | NetID         | GitHub ID   | Role          | Experience    |
 | ------------- | ------------- | ------------| ------------- | ------------- |
-|               |               |             |               |               |            
+| Mike Edukonis | meduk2        | meduk2      |               |               |            
 |               |               |             |               |               |
 |               |               |             |               |               |
 |               |               |             |               |               |
