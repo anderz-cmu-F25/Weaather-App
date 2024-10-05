@@ -10,7 +10,7 @@ uiuc-cs427-f24 Term Project Team #38
 | Ryan Forester | ryanef2       | ryanfore5   |               |                                       |
 | Shijie Fan    | shijief2      | W1ndfan     | Developer     | Java, Typescript, Python, C           |
 | Shuqi Huang   | shuqih3       | Sukiii17    | Developer     | Spring Boot, Java, Python, Basic React|
-| Yuchen Gu     | yg11          | yuchengu    |               |                                       |
+| Yuchen Gu     | yg11          | yuchengu    | Developer     | Java, Typescript, Python              |
 | Keyuan Chang  | keyuanc2      | OAACKY      | Developer     | C++, Spring Boot                      |
 <br/>
 
