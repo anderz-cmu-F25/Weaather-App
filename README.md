@@ -8,8 +8,8 @@ uiuc-cs427-f24 Term Project Team #38
 | Ander Zhu     | shuqinz2      | AnderZhu    |               |               |
 | Ningyuan Xie  | nxie3         | ningyuan-xie|               |               |
 | Ryan Forester | ryanef2       |             |               |               |
-| Shijie Fan    | shijief2      |             |               |               |
+| Shijie Fan    | shijief2      | W1ndfan     |               |               |
 | Shuqi Huang   | shuqih3       |             |               |               |
-| Yuchen Gu     | yg11          |             |               |               |
+| Yuchen Gu     | yg11          | yuchengu    |               |               |
 | Keyuan Chang  | keyuanc2      |             |               |               |
 <br/>
