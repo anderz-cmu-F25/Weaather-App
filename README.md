@@ -13,7 +13,7 @@ uiuc-cs427-f24 Term Project Team #38
 | Yuchen Gu     | yg11          | yuchengu    |               |               |
 | Keyuan Chang  | keyuanc2      | oaacky      |               |               |
 <br/>
-|                |                                 |                       |
+
 <b>Weekly Progress Reports</b>
 </br> 
 </br>
@@ -22,6 +22,7 @@ Meeting time:
 Meeting location (zoom link):
 </br> 
 </br>
+
 <b>Week 1</b>
 </br>
 Members present: List the NetID of the people who attended the meeting
