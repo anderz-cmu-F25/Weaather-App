@@ -1,0 +1,14 @@
+# ignore MacOS desktop service file
+*.DS_Store
+
+# ignore vscode settings
+.vscode/settings.json
+
+# ignore .idea directory
+.idea
+
+# ignore .gradle directory
+.gradle
+
+# ignore local.properties file
+local.properties
