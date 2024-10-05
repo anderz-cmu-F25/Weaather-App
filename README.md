@@ -8,7 +8,7 @@ uiuc-cs427-f24 Term Project Team #38
 | Ander Zhu     | shuqinz2      | AnderZhu    |               |                                       |
 | Ningyuan Xie  | nxie3         | ningyuan-xie| Developer     | Python, Java, C++                     |
 | Ryan Forester | ryanef2       | ryanfore5   |               |                                       |
-| Shijie Fan    | shijief2      | W1ndfan     |               |                                       |
+| Shijie Fan    | shijief2      | W1ndfan     | Developer     | Java, Typescript, Python, C           |
 | Shuqi Huang   | shuqih3       | Sukiii17    | Developer     | Spring Boot, Java, Python, Basic React|
 | Yuchen Gu     | yg11          | yuchengu    |               |                                       |
 | Keyuan Chang  | keyuanc2      | OAACKY      | Developer     | C++, Spring Boot                      |
