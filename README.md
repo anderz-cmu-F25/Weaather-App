@@ -17,9 +17,9 @@ uiuc-cs427-f24 Term Project Team #38
 <b>Weekly Progress Reports</b>
 </br> 
 </br>
-Meeting time: 
+Meeting time: Saturday 11am eastern
 </br> 
-Meeting location (zoom link):
+Meeting location (zoom link): https://illinois.zoom.us/j/87984002598?pwd=qZSlTOJM1a1tM6sPl0pTabG1QsIX7b.1
 </br> 
 </br>
 
