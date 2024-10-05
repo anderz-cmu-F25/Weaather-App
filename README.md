@@ -6,7 +6,7 @@ uiuc-cs427-f24 Term Project Team #38
 | ------------- | ------------- | ------------| ------------- | ---------------- |
 | Mike Edukonis | meduk2        | meduk2      |               |                  |            
 | Ander Zhu     | shuqinz2      | AnderZhu    |               |                  |
-| Ningyuan Xie  | nxie3         | ningyuan-xie|               |                  |
+| Ningyuan Xie  | nxie3         | ningyuan-xie| Developer     | Python, Java, C++|
 | Ryan Forester | ryanef2       |             |               |                  |
 | Shijie Fan    | shijief2      | W1ndfan     |               |                  |
 | Shuqi Huang   | shuqih3       |             |               |                  |
