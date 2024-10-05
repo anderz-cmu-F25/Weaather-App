@@ -11,5 +11,5 @@ uiuc-cs427-f24 Term Project Team #38
 | Shijie Fan    | shijief2      | W1ndfan     |               |               |
 | Shuqi Huang   | shuqih3       |             |               |               |
 | Yuchen Gu     | yg11          | yuchengu    |               |               |
-| Keyuan Chang  | keyuanc2      |             |               |               |
+| Keyuan Chang  | keyuanc2      | oaacky      |               |               |
 <br/>
