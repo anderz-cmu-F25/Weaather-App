@@ -7,7 +7,7 @@ uiuc-cs427-f24 Term Project Team #38
 | Mike Edukonis | meduk2        | meduk2      | Manager       | Tm Lead/Mgr                           |            
 | Ander Zhu     | shuqinz2      | AnderZhu    | Tech Lead     |                                       |
 | Ningyuan Xie  | nxie3         | ningyuan-xie| Developer     | Python, Java, C++                     |
-| Ryan Forester | ryanef2       | ryanfore5   | Developer     |                                       |
+| Ryan Forester | ryanef2       | ryanfore5   | Developer     | Java, Kotlin, Python, Spring Boot     |
 | Shijie Fan    | shijief2      | W1ndfan     | Developer     | Java, Typescript, Python, C           |
 | Shuqi Huang   | shuqih3       | Sukiii17    | Developer     | Spring Boot, Java, Python, Basic React|
 | Yuchen Gu     | yg11          | yuchengu    | Developer     | Java, Typescript, Python              |
