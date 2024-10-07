@@ -4,6 +4,9 @@
 # ignore vscode settings
 .vscode/settings.json
 
+# ignore pdf files
+*.pdf
+
 # ignore .idea directory
 .idea
 
