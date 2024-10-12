@@ -31,13 +31,13 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-| meduk2         |  Installed android studio Met with team, agenda, timeline.                                | Update Github README with Week 2 meeting notes. FD Use Cases by 10/13 assist where needed.  Keep up with team document for milestone 2.                       |
-| shuqinz2       |Installed android studio Completed Inf requirements                                 | Be familiar with entire milestone. Assist where needed as technical lead.                       |
-| nxie3          |Installed android studio                                  | FD Use Cases by 10/13                       |
-| shijief2       |Installed android studio                                  | Class Diagrams by 10/16                       |
-| shuqih3        |Installed android studio                                 | Component Transition 10/18                       |
-| yg11           |Installed android studio                                  |Component Transition 10/18                        |
-| keyuanc2       |Installed android studio Completed Inf requirements                                  | Be familiar with entire milestone. Assist where needed                       |
+|                |                                 |                       |
+|                |                                 |                       |
+|                |                                 |                       |
+|                |                                 |                       |
+|                |                                 |                       |
+|                |                                 |                       |
+|                |                                 |                       |
 |                |                                 |                       |
 </br>
 
@@ -46,17 +46,19 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 Members present: List the NetID of the people who attended the meeting
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: Agenda had 7 housekeeping items that were discussed (introductions, communication medium, roles, etc.)
+Discussed milestone 2 assignments and the need to adhere to timelines as each part has dependency on the previous. 
+Laid out timelines for each part of process 10/13-10/19 and what success looks like on due date of 10/20.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| meduk2         |  Installed android studio Met with team, agenda, timeline.| Update Github README with Week 2 meeting notes. FD Use Cases by 10/13 assist where needed.  Keep up with team document for milestone 2.|
+| shuqinz2       |Installed android studio Completed Inf requirements| Be familiar with entire milestone. Assist where needed as technical lead.|
+| nxie3          |Installed android studio         | FD Use Cases by 10/13 |
+| shijief2       |Installed android studio         | Class Diagrams by 10/16|
+| shuqih3        |Installed android studio         | Component Transition 10/18|
+| yg11           |Installed android studio         |Component Transition 10/18 |
+| keyuanc2       |Installed android studio Completed Inf requirements| Be familiar with entire milestone. Assist where needed.|
 |                |                                 |                       |
 </br>
 
