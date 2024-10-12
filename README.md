@@ -32,12 +32,12 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
 | meduk2         |  Installed android studio Met with team, agenda, timeline.                                | Update Github README with Week 2 meeting notes. FD Use Cases by 10/13 assist where needed.  Keep up with team document for milestone 2.                       |
-| shuqinz2       |                                 |                       |
-| nxie3          |                                 |                       |
-| shijief2       |                                 |                       |
-| shuqih3        |                                 |                       |
-| yg11           |                                 |                       |
-| keyuanc2       |                                 |                       |
+| shuqinz2       |Installed android studio Completed Inf requirements                                 | Be familiar with entire milestone. Assist where needed as technical lead.                       |
+| nxie3          |Installed android studio                                  | FD Use Cases by 10/13                       |
+| shijief2       |Installed android studio                                  | Class Diagrams by 10/16                       |
+| shuqih3        |Installed android studio                                 | Component Transition 10/18                       |
+| yg11           |Installed android studio                                  |Component Transition 10/18                        |
+| keyuanc2       |Installed android studio Completed Inf requirements                                  | Be familiar with entire milestone. Assist where needed                       |
 |                |                                 |                       |
 </br>
 
