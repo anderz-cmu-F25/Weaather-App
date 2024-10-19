@@ -44,7 +44,7 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 
 <b>Week 2</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: meduk2,shuqinz2,nxie3,shijief2,shuqih3,yg11,keyuanc2
 </br>
 Meeting notes: Agenda had 7 housekeeping items that were discussed (introductions, communication medium, roles, etc.)
 Discussed milestone 2 assignments and the need to adhere to timelines as each part has dependency on the previous. 
@@ -65,20 +65,24 @@ Laid out timelines for each part of process 10/13-10/19 and what success looks l
 
 <b>Week 3</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: meduk2,shuqinz2,nxie3,shijief2,shuqih3,yg11,keyuanc2,ryanef2
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: Entire team was present.  Discussed progress on milestone 2<br>
+Requested team to take one last complete read through and note an questions/concerns/changes to<br>
+the group in MS Teams.  Otherwise give a thumbs up if good.  meduk2 to fix formatting, make pdf, send to team<br>
+and turn in on campuswire on 10/20.  Reminder to all re: peer review NLT 10/20. <br>
+Milestone 3 not released yet will review and make assignments as soon as it is available.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| meduk2         | Met with team, agenda, timeline. Assisted where needed and compiled milestone 2 doc|Finalize MS 2 doc, turn in by 10/20 on campsuwire, peer review|
+| shuqinz2       |Completed informal requirements Assisted where needed|Assist with finalizing MS 2 doc, peer review|
+| nxie3          |Completed FD use cases| One last look on MS 2 doc, offer assistance where needed, peer review |
+| shijief2       |Completed class diagram| One last look on MS 2 doc, offer assistance where needed, peer review|
+| shuqih3        |Completed component transition graph|One last look on MS 2 doc, offer assistance where needed, peer review|
+| yg11           |Completed component transition graph|One last look on MS 2 doc, offer assistance where needed, peer review|
+| keyuanc2       |Completed informal requirements Assisted where needed|One last look on MS 2 doc, offer assistance where needed, peer review|
+| ryanef2        |Completed class diagram| One last look on MS 2 doc, offer assistance where needed, peer review|
 </br>
 
 
