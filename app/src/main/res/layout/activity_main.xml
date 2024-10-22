@@ -101,5 +101,12 @@
             android:layout_height="wrap_content"
             android:text="Add a location" />
 
+        <!-- New button for switching themes -->
+        <Button
+            android:id="@+id/buttonSwitchTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch Theme" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
