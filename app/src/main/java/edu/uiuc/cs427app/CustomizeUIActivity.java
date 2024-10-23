@@ -38,8 +38,11 @@ public class CustomizeUIActivity extends AppCompatActivity {
         Button defaultUIButton = findViewById(R.id.defaultUIButton);
         LinearLayout savedCustomizationsLayout = findViewById(R.id.savedCustomizationsLayout);
 
-        // Apply any existing customizations to the Customize UI page itself
+        // Retrieve savedUICount from SharedPreferences (to avoid resetting when activity is recreated)
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        savedUICount = preferences.getInt("savedUICount", 0);
+
+        // Apply any existing customizations to the Customize UI page itself
         String buttonColor = preferences.getString(BUTTON_COLOR_KEY, "Default");
         String backgroundColor = preferences.getString(BACKGROUND_COLOR_KEY, "Default");
         applyCustomizations(buttonColor, backgroundColor);
@@ -57,7 +60,7 @@ public class CustomizeUIActivity extends AppCompatActivity {
             int selectedBackgroundColorId = backgroundColorGroup.getCheckedRadioButtonId();
             String backgroundColorSelected = getColorFromId(selectedBackgroundColorId);
 
-            // Increment the count for saved UIs
+            // Increment the count for saved UIs (this will preserve the previous savedUICount)
             savedUICount++;
 
             // Create a user-friendly description for the saved customization
