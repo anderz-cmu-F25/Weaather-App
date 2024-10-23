@@ -1,5 +1,6 @@
 package edu.uiuc.cs427app;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.graphics.Color;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.graphics.drawable.ColorDrawable;
 
+@SuppressLint("SetTextI18n, NonConstantResourceId")
+@SuppressWarnings("ConstantConditions")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Define SharedPreferences constants for saving user settings

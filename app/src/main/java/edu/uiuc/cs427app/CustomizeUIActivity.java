@@ -1,5 +1,6 @@
 package edu.uiuc.cs427app;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+@SuppressLint("SetTextI18n, NonConstantResourceId")
+@SuppressWarnings("ConstantConditions")
 public class CustomizeUIActivity extends AppCompatActivity {
 
     // SharedPreferences constants for saving and retrieving user customizations
