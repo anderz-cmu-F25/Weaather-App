@@ -1,66 +1,99 @@
 package edu.uiuc.cs427app;
 
 import android.content.Intent;
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
-import androidx.navigation.ui.AppBarConfiguration;
-
-import edu.uiuc.cs427app.databinding.ActivityMainBinding;
-
-import android.widget.Button;
-
-// Import the SharedPreferences class to save the selected theme
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.graphics.Color;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import android.graphics.drawable.ColorDrawable;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
-
     // Define SharedPreferences constants for saving user settings
-    // File name for SharedPreferences
     private static final String PREFS_NAME = "UserSettings";
-    // Key used to store the theme preference
-    private static final String THEME_KEY = "Theme";
+    private static final String BUTTON_COLOR_KEY = "button_color";
+    private static final String BACKGROUND_COLOR_KEY = "background_color";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Load the selected theme from SharedPreferences
+        // Load the selected UI settings (button and background color) from SharedPreferences
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String userTheme = preferences.getString(THEME_KEY, "Default");
-        // Apply the appropriate theme before setting the content view
-        setAppTheme(userTheme);
+        String buttonColor = preferences.getString(BUTTON_COLOR_KEY, "Default");
+        String backgroundColor = preferences.getString(BACKGROUND_COLOR_KEY, "Default");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initializing the UI components
-        // The list of locations should be customized per user (change the implementation so that
-        // buttons are added to layout programmatically
+        // Reference the main ConstraintLayout to apply user customizations
+        ConstraintLayout mainLayout = findViewById(R.id.mainLayout);
+
+        // Apply the saved background color to the layout
+        switch (backgroundColor) {
+            case "White":
+                mainLayout.setBackgroundColor(Color.WHITE);
+                break;
+            case "Light Gray":
+                mainLayout.setBackgroundColor(Color.LTGRAY);
+                break;
+            case "Gray":
+                mainLayout.setBackgroundColor(Color.GRAY);
+                break;
+        }
+
+        // Initialize other UI components (buttons)
         Button buttonChampaign = findViewById(R.id.buttonChampaign);
         Button buttonChicago = findViewById(R.id.buttonChicago);
         Button buttonLA = findViewById(R.id.buttonLA);
-        Button buttonNew = findViewById(R.id.buttonAddLocation);
+        Button buttonAddLocation = findViewById(R.id.buttonAddLocation);
+        Button buttonCustomizeUI = findViewById(R.id.buttonCustomizeUI);
 
-        // New button for switching theme
-        Button buttonSwitchTheme = findViewById(R.id.buttonSwitchTheme);
-
+        // Set click listeners for existing buttons
         buttonChampaign.setOnClickListener(this);
         buttonChicago.setOnClickListener(this);
         buttonLA.setOnClickListener(this);
-        buttonNew.setOnClickListener(this);
+        buttonAddLocation.setOnClickListener(this);
 
-        // Set listener for the switch theme button
-        buttonSwitchTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchTheme();  // Call method to switch themes
-            }
+        // Set listener for the "Customize UI" button
+        buttonCustomizeUI.setOnClickListener(v -> {
+            // Open the CustomizeUIActivity to customize the UI
+            Intent intent = new Intent(MainActivity.this, CustomizeUIActivity.class);
+            startActivity(intent);
         });
+
+        // Apply the saved button color to all buttons and ActionBar
+        applyButtonColors(buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
+    }
+
+    // Helper method to apply the button colors to all buttons and ActionBar
+    private void applyButtonColors(String buttonColor, Button... buttons) {
+        int color = Color.BLUE;  // Default button color
+
+        // Determine the color based on the saved preference
+        switch (buttonColor) {
+            case "Blue":
+                color = Color.BLUE;
+                break;
+            case "Red":
+                color = Color.RED;
+                break;
+            case "Green":
+                color = Color.GREEN;
+                break;
+            // Add more colors as needed
+        }
+
+        // Apply the color to each button
+        for (Button button : buttons) {
+            button.setBackgroundColor(color);
+        }
+
+        // Apply the same color to the ActionBar (top bar)
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+        }
     }
 
     @Override
@@ -87,52 +120,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-    // Method to apply the theme to the activity based on the theme name
-    private void setAppTheme(String themeName) {
-        // Switch between different themes defined in themes.xml
-        switch (themeName) {
-            case "Dark":
-                setTheme(R.style.Theme_MyFirstApp_Dark);
-                break;
-            case "Light":
-                setTheme(R.style.Theme_MyFirstApp_Light);
-                break;
-            default:
-                setTheme(R.style.Theme_MyFirstApp);
-                break;
-        }
-    }
-
-    // Method to switch between themes when the "Switch Theme" button is clicked
-    private void switchTheme() {
-        // Access SharedPreferences to retrieve and save the theme
-        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        // Get the current theme from SharedPreferences
-        String currentTheme = preferences.getString(THEME_KEY, "Default");
-        String newTheme;
-
-        // Cycle through the available themes (Default -> Dark -> Light -> Default)
-        switch (currentTheme) {
-            case "Default":
-                newTheme = "Dark";
-                break;
-            case "Dark":
-                newTheme = "Light";
-                break;
-            default:
-                newTheme = "Default";
-                break;
-        }
-
-        // Save the new theme in SharedPreferences
-        editor.putString(THEME_KEY, newTheme);
-        editor.apply();  // Commit changes
-
-        // Restart the activity to apply the new theme
-        recreate();
-    }
 }
-
