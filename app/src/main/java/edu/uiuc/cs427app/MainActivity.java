@@ -1,6 +1,7 @@
 package edu.uiuc.cs427app;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -67,11 +68,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         // Apply the saved button color to all buttons and ActionBar
-        applyButtonColors(buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
+        MainActivity.applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
     }
 
     // Helper method to apply the button colors to all buttons and ActionBar
-    private void applyButtonColors(String buttonColor, Button... buttons) {
+    public static void applyButtonColors(Activity activity, String buttonColor, Button... buttons) {
         int color = Color.BLUE;  // Default button color
 
         // Determine the color based on the saved preference
@@ -93,9 +94,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setBackgroundColor(color);
         }
 
-        // Apply the same color to the ActionBar (top bar)
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+        // Apply the same color to the ActionBar (top bar) if applicable
+        if (activity instanceof AppCompatActivity) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+            if (appCompatActivity.getSupportActionBar() != null) {
+                appCompatActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+            }
         }
     }
 
