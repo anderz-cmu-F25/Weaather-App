@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.graphics.Color;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -52,12 +53,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCustomizeUI.setOnClickListener(this);  // Add listener for "Customize UI" button
 
         // Apply the saved button color to all buttons and ActionBar
-        MainActivity.applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
+        applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
     }
 
     // Helper method 1: apply the button colors to all buttons and ActionBar
     public static void applyButtonColors(Activity activity, String buttonColor, Button... buttons) {
-        int color = Color.BLUE;  // Default button color
+        int color = 0;
 
         // Determine the color based on the saved preference
         switch (buttonColor) {
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // Helper method 2: apply the background color to the layout
-    public static void applyBackgroundColor(String backgroundColor, ConstraintLayout layout) {
+    public static void applyBackgroundColor(String backgroundColor, ViewGroup layout) {
         int color = Color.WHITE;  // Default background color
 
         // Determine the color based on the saved preference
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case "White":
                 color = Color.WHITE;
                 break;
-            case "Light Gray":
+            case "LightGray":
                 color = Color.LTGRAY;
                 break;
             case "Gray":
