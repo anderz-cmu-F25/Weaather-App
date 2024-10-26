@@ -35,20 +35,10 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_details);
 
         // Reference the main ConstraintLayout to apply user customizations
-        ConstraintLayout mainLayout = findViewById(R.id.detailsLayout);
+        ConstraintLayout detailsLayout = findViewById(R.id.detailsLayout);
 
         // Apply the saved background color to the layout
-        switch (backgroundColor) {
-            case "White":
-                mainLayout.setBackgroundColor(Color.WHITE);
-                break;
-            case "Light Gray":
-                mainLayout.setBackgroundColor(Color.LTGRAY);
-                break;
-            case "Gray":
-                mainLayout.setBackgroundColor(Color.GRAY);
-                break;
-        }
+        MainActivity.applyBackgroundColor(backgroundColor, detailsLayout);
 
         // Process the Intent payload that has opened this Activity and show the information accordingly
         String cityName = getIntent().getStringExtra("city").toString();

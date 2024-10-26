@@ -35,17 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ConstraintLayout mainLayout = findViewById(R.id.mainLayout);
 
         // Apply the saved background color to the layout
-        switch (backgroundColor) {
-            case "White":
-                mainLayout.setBackgroundColor(Color.WHITE);
-                break;
-            case "Light Gray":
-                mainLayout.setBackgroundColor(Color.LTGRAY);
-                break;
-            case "Gray":
-                mainLayout.setBackgroundColor(Color.GRAY);
-                break;
-        }
+        applyBackgroundColor(backgroundColor, mainLayout);
 
         // Initialize other UI components (buttons)
         Button buttonChampaign = findViewById(R.id.buttonChampaign);
@@ -71,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
     }
 
-    // Helper method to apply the button colors to all buttons and ActionBar
+    // Helper method 1: apply the button colors to all buttons and ActionBar
     public static void applyButtonColors(Activity activity, String buttonColor, Button... buttons) {
         int color = Color.BLUE;  // Default button color
 
@@ -101,6 +91,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 appCompatActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
             }
         }
+    }
+
+    // Helper method 2: apply the background color to the layout
+    public static void applyBackgroundColor(String backgroundColor, ConstraintLayout layout) {
+        int color = Color.WHITE;  // Default background color
+
+        // Determine the color based on the saved preference
+        switch (backgroundColor) {
+            case "White":
+                color = Color.WHITE;
+                break;
+            case "Light Gray":
+                color = Color.LTGRAY;
+                break;
+            case "Gray":
+                color = Color.GRAY;
+                break;
+            // Add more colors as needed
+        }
+
+        // Apply the color to the layout
+        layout.setBackgroundColor(color);
     }
 
     @Override
