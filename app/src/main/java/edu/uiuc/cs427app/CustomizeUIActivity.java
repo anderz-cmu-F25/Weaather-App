@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +31,19 @@ public class CustomizeUIActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Load the selected UI settings (button and background color) from SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String buttonColor = preferences.getString(BUTTON_COLOR_KEY, "Default");
+        String backgroundColor = preferences.getString(BACKGROUND_COLOR_KEY, "Default");
+        savedUICount = preferences.getInt("savedUICount", 0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customize_ui);
+
+        // Reference the details ScrollView to apply user customizations
+        ScrollView uiView = findViewById(R.id.uiView);
+        // Apply the saved background color to the layout
+        MainActivity.applyBackgroundColor(backgroundColor, uiView);
 
         // Initialize the UI components
         RadioGroup buttonColorGroup = findViewById(R.id.radioGroupButtonColor);
@@ -41,14 +53,8 @@ public class CustomizeUIActivity extends AppCompatActivity {
         Button defaultUIButton = findViewById(R.id.defaultUIButton);
         LinearLayout savedCustomizationsLayout = findViewById(R.id.savedCustomizationsLayout);
 
-        // Retrieve savedUICount from SharedPreferences (to avoid resetting when activity is recreated)
-        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        savedUICount = preferences.getInt("savedUICount", 0);
-
-        // Apply any existing customizations to the Customize UI page itself
-        String buttonColor = preferences.getString(BUTTON_COLOR_KEY, "Default");
-        String backgroundColor = preferences.getString(BACKGROUND_COLOR_KEY, "Default");
-        applyCustomizations(buttonColor, backgroundColor);
+        // Apply the saved button color to all buttons and ActionBar
+        MainActivity.applyButtonColors(this, buttonColor, saveButton, viewButton, defaultUIButton);
 
         // Preselect "Blue" for button color and "White" for background color by default
         buttonColorGroup.check(R.id.radioButtonBlue);  // Preselect "Blue Button"
@@ -97,7 +103,6 @@ public class CustomizeUIActivity extends AppCompatActivity {
             loadSavedCustomizations(savedCustomizationsLayout);  // Refresh the list
         });
 
-
         // Toggle visibility of saved customizations
         viewButton.setOnClickListener(v -> {
             if (isExpanded) {
@@ -122,9 +127,6 @@ public class CustomizeUIActivity extends AppCompatActivity {
             editor.putString(BUTTON_COLOR_KEY, "Blue");
             editor.putString(BACKGROUND_COLOR_KEY, "White");
             editor.apply();
-
-            // Apply the changes to Customize UI page itself immediately
-            applyCustomizations("Blue", "White");
 
             // Restart MainActivity to apply the changes globally
             Intent intent = new Intent(this, MainActivity.class);
@@ -213,20 +215,7 @@ public class CustomizeUIActivity extends AppCompatActivity {
         Toast.makeText(this, "Applied " + description, Toast.LENGTH_SHORT).show();
     }
 
-    // Helper method 4: apply customizations dynamically to the Customize UI page
-    private void applyCustomizations(String buttonColor, String backgroundColor) {
-        // Apply background color to the Customize UI layout
-        LinearLayout layout = findViewById(R.id.customizeUILayout);
-        MainActivity.applyBackgroundColor(backgroundColor, layout);
-
-        // Apply button color to buttons on the Customize UI page
-        Button saveButton = findViewById(R.id.saveCustomizationsButton);
-        Button viewButton = findViewById(R.id.viewCustomizationsButton);
-        Button defaultUIButton = findViewById(R.id.defaultUIButton);
-        MainActivity.applyButtonColors(this, buttonColor, saveButton, viewButton, defaultUIButton);
-    }
-
-    // Helper method 5: delete saved customizations
+    // Helper method 4: delete saved customizations
     private void deleteSavedCustomization(String uiKey) {
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
