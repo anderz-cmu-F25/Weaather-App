@@ -34,7 +34,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        // Reference the main ConstraintLayout to apply user customizations
+        // Reference the details ConstraintLayout to apply user customizations
         ConstraintLayout detailsLayout = findViewById(R.id.detailsLayout);
 
         // Apply the saved background color to the layout

@@ -49,13 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonChicago.setOnClickListener(this);
         buttonLA.setOnClickListener(this);
         buttonAddLocation.setOnClickListener(this);
-
-        // Set listener for the "Customize UI" button
-        buttonCustomizeUI.setOnClickListener(v -> {
-            // Open the CustomizeUIActivity to customize the UI
-            Intent intent = new Intent(MainActivity.this, CustomizeUIActivity.class);
-            startActivity(intent);
-        });
+        buttonCustomizeUI.setOnClickListener(this);  // Add listener for "Customize UI" button
 
         // Apply the saved button color to all buttons and ActionBar
         MainActivity.applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
@@ -136,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonAddLocation:
                 // Implement this action to add a new location to the list of locations
+                break;
+            case R.id.buttonCustomizeUI:
+                // Open the CustomizeUIActivity to customize the UI
+                intent = new Intent(this, CustomizeUIActivity.class);
+                startActivity(intent);
                 break;
         }
     }
