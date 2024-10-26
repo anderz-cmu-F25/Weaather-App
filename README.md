@@ -88,21 +88,24 @@ Milestone 3 not released yet will review and make assignments as soon as it is a
 
 <b>Week 4</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: meduk2,shuqinz2,nxie3,shuqih3,keyuanc2
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: Discussed progress on milestone 3<br>
+First six tasks that need to be done as other tasks are dependant on them.<br>
+Updated due dates on those critical tasks as needed.  Most should be done this weekend.<br>
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| meduk2         |Met with team, agenda, timeline. Assisted where needed and updated task due dates|Get an update from members that were not present|
+| shuqinz2       |Working on RegisterActivity and LoginActivity|continue working on RegisterActivity and LoginActivity.  Look for keyuanc2 to finish AuthenticationService by 10/27|
+| nxie3          |Completed Theme task|begin working on MainActivity|
+| shijief2       |Working on CityActivity and WeatherActivity|Continue working on CityActivity and WeatherActivity|
+| shuqih3        |Working on WeatherService and LLMService|Continue working on WeatherService and LLMService|
+| yg11           |Working on MapService and ShowMapActivity|Complete MapService by 10/27 and begin ShowMapActivity|
+| keyuanc2       |Working on AuthenticationService|Complete AuthenticationService by 10/27 and start on User task|
+| ryanef2        |Working on City task|Complete City task by 10/27 if possible and start on CityListActivity|
 </br>
+
 
 
 <b>Week 5</b>
