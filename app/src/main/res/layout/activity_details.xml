@@ -11,9 +11,12 @@
         android:id="@+id/details"
         android:layout_width="409dp"
         android:layout_height="601dp"
+        android:layout_marginBottom="29dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/welcomeText"
@@ -26,9 +29,15 @@
             android:layout_height="268dp" />
 
         <Button
+            android:id="@+id/wxButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/show_weather_button_text" />
+
+        <Button
             android:id="@+id/mapButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Show Map" />
+            android:text="@string/show_map_button_text" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

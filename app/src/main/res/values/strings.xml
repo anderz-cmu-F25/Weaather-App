@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Team 38</string>
+    <string name="show_weather_button_text">Show Weather</string>
+    <string name="show_map_button_text">Show Map</string>
 </resources>
