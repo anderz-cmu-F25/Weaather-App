@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // Helper method 1: apply the button colors to all buttons and ActionBar
     public static void applyButtonColors(Activity activity, String buttonColor, Button... buttons) {
-        int color = 0;
+        int color = Color.BLUE;
 
         // Determine the color based on the saved preference
         switch (buttonColor) {
