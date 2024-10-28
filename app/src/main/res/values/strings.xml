@@ -2,4 +2,7 @@
     <string name="app_name">Team 38</string>
     <string name="show_weather_button_text">Show Weather</string>
     <string name="show_map_button_text">Show Map</string>
+    <string name="default_weather_heading">Weather for</string>
+    <string name="default_weather_text">Weather information will be displayed here</string>
+    <string name="weather_ai_insight_button_text">Get AI Insight</string>
 </resources>

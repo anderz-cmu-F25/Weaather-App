@@ -1,6 +1,7 @@
 package edu.uiuc.cs427app;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -12,13 +13,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 @SuppressLint("SetTextI18n, NonConstantResourceId")
 @SuppressWarnings("ConstantConditions")
-public class DetailsActivity extends AppCompatActivity implements View.OnClickListener{
+public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Define SharedPreferences constants for saving user settings
     private static final String PREFS_NAME = "UserSettings";
     private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
 
+    private String cityName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Load the selected UI settings (button and background color) from SharedPreferences
@@ -36,9 +38,9 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         MainActivity.applyBackgroundColor(backgroundColor, detailsLayout);
 
         // Process the Intent payload that has opened this Activity and show the information accordingly
-        String cityName = getIntent().getStringExtra("city");
-        String welcome = "Welcome to the "+cityName;
-        String cityWeatherInfo = "Detailed information about the weather of "+cityName;
+        this.cityName = getIntent().getStringExtra("city");
+        String welcome = "Welcome to the " + this.cityName;
+        String cityWeatherInfo = "Detailed information about the weather of " + this.cityName;
 
         // Initializing the GUI elements
         TextView welcomeMessage = findViewById(R.id.welcomeText);
@@ -60,7 +62,16 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        //Implement this (create an Intent that goes to a new Activity, which shows the map)
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.wxButton:
+                intent = new Intent(this, ShowWeatherActivity.class);
+                intent.putExtra("city", this.cityName);
+                startActivity(intent);
+                break;
+            case R.id.mapButton:
+                break;
+        }
     }
 }
 
