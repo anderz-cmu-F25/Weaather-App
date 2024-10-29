@@ -94,11 +94,9 @@ public class AuthenticationService {
     public void addCity(String username, City city) {
         ContentValues values = new ContentValues();
         values.put("username", username);
-        /* need to implement city member functions
         values.put("city_name", city.getName());
-        values.put("latitude", city.getLatitude());
         values.put("longitude", city.getLongitude());
-         */
+        values.put("latitude", city.getLatitude());
         dbHelper.getWritableDatabase().insert("cities", null, values);
     }
 
@@ -124,7 +122,7 @@ public class AuthenticationService {
                 double latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
                 double longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
                 // add one city to city list
-                //cityList.add(new City(cityName, latitude, longitude));
+                cityList.add(new City(cityName, latitude, longitude));
             }
             cursor.close();
         }
@@ -142,8 +140,22 @@ public class AuthenticationService {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE users (username TEXT PRIMARY KEY, password TEXT);");
-            db.execSQL("CREATE TABLE cities (username TEXT, city_name TEXT, latitude REAL, longitude REAL, PRIMARY KEY (username, city_name));");
+            // db.execSQL("CREATE TABLE users (username TEXT PRIMARY KEY, password TEXT);");
+            // db.execSQL("CREATE TABLE cities (username TEXT, city_name TEXT, latitude REAL, longitude REAL, PRIMARY KEY (username, city_name)), FOREIGN KEY (username) REFERENCES users(username);");
+
+            db.execSQL("CREATE TABLE users ("
+                    + "username TEXT PRIMARY KEY, "
+                    + "password TEXT"
+                    + ");");
+
+            db.execSQL("CREATE TABLE cities ("
+                    + "username TEXT, "
+                    + "city_name TEXT, "
+                    + "latitude REAL, "
+                    + "longitude REAL, "
+                    + "PRIMARY KEY (username, city_name), "
+                    + "FOREIGN KEY (username) REFERENCES users(username)"
+                    + ");");
         }
 
         @Override
