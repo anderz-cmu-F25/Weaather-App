@@ -33,10 +33,12 @@ public class User {
     // add one city
     public void addCity(City city) {
         // need to add code
+        cityList.add(city);
     }
 
     // remove one city
-    public void removeCity(String cityName) {
+    public boolean removeCity(String cityName) {
         // need to add code
+        return cityList.removeIf(city -> city.getName().equals(cityName));
     }
 }
