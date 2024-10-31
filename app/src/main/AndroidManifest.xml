@@ -25,6 +25,10 @@
 
         <!-- Add the CustomizeUIActivity to the manifest -->
         <activity android:name=".CustomizeUIActivity" android:exported="true"></activity>
+
+        <!-- Declare Login and Register Activities -->
+        <activity android:name=".LoginActivity" android:exported="false" />
+        <activity android:name=".RegisterActivity" android:exported="false" />
     </application>
 
 </manifest>
