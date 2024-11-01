@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonLA = findViewById(R.id.buttonLA);
         Button buttonAddLocation = findViewById(R.id.buttonAddLocation);
         Button buttonCustomizeUI = findViewById(R.id.buttonCustomizeUI);
-        Button buttonLogin = findViewById(R.id.buttonLogin);
-        Button buttonRegister = findViewById(R.id.buttonRegister);
 
         // Set click listeners for existing buttons
         buttonChampaign.setOnClickListener(this);
@@ -53,11 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonLA.setOnClickListener(this);
         buttonAddLocation.setOnClickListener(this);
         buttonCustomizeUI.setOnClickListener(this);  // Add listener for "Customize UI" button
-        buttonLogin.setOnClickListener(this);
-        buttonRegister.setOnClickListener(this);
+
 
         // Apply the saved button color to all buttons and ActionBar
-        applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI, buttonLogin, buttonRegister);
+        applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
     }
 
     // Helper method 1: apply the button colors to all buttons and ActionBar
@@ -139,14 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.buttonCustomizeUI:
                 // Open the CustomizeUIActivity to customize the UI
                 intent = new Intent(this, CustomizeUIActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.buttonLogin:
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.buttonRegister:
-                intent = new Intent(this, RegisterActivity.class);
                 startActivity(intent);
                 break;
         }
