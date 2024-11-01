@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAddLocation.setOnClickListener(this);
         buttonCustomizeUI.setOnClickListener(this);  // Add listener for "Customize UI" button
 
+
         // Apply the saved button color to all buttons and ActionBar
         applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
     }

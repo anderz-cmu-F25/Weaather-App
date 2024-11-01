@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:text="Add a location" />
 
-        <!-- New button for customizing UI -->
+
         <Button
             android:id="@+id/buttonCustomizeUI"
             android:layout_width="match_parent"
@@ -114,4 +114,5 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
