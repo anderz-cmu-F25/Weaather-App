@@ -19,40 +19,74 @@ public class AuthenticationService {
     private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
 
-    private AccountManager accountManager;
     private DatabaseHelper dbHelper;
+    private Context context;
     private SharedPreferences sharedPreferences;
 
     // initialize for AuthenticationService
     public AuthenticationService(Context context) {
-        this.accountManager = AccountManager.get(context);
+        this.context = context;
         this.dbHelper = new DatabaseHelper(context);
         this.sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     // Register a new user
     public boolean register(String username, String password) {
-        Account account = new Account(username, ACCOUNT_TYPE);
-        if (accountManager.addAccountExplicitly(account, password, null)) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        
+        try {
+            // Check if username already exists
+            Cursor cursor = db.query("users", 
+                new String[]{"username"}, 
+                "username = ?",
+                new String[]{username}, 
+                null, null, null);
+                
+            if (cursor.getCount() > 0) {
+                cursor.close();
+                return false;
+            }
+            cursor.close();
+
+            // Insert new user
             ContentValues values = new ContentValues();
             values.put("username", username);
             values.put("password", password);
-            dbHelper.getWritableDatabase().insert("users", null, values);
-            return true;
+            
+            long result = db.insert("users", null, values);
+            return result != -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            db.close();
         }
-        return false;
     }
 
     // Login an existing user
     public boolean login(String username, String password) {
-        Account[] accounts = accountManager.getAccountsByType(ACCOUNT_TYPE);
-        for (Account account : accounts) {
-            if (account.name.equals(username)) {
-                String storedPassword = accountManager.getPassword(account);
-                return storedPassword != null && storedPassword.equals(password);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        
+        try {
+            Cursor cursor = db.query("users", 
+                new String[]{"password"}, 
+                "username = ?",
+                new String[]{username}, 
+                null, null, null);
+
+            if (cursor.moveToFirst()) {
+                String storedPassword = cursor.getString(0);
+                cursor.close();
+                return password.equals(storedPassword);
             }
+            cursor.close();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            db.close();
         }
-        return false;
     }
 
     // Fetch user data by username
