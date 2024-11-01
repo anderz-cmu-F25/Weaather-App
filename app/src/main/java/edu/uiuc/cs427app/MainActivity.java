@@ -2,6 +2,7 @@ package edu.uiuc.cs427app;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,9 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.graphics.Color;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.graphics.drawable.ColorDrawable;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("SetTextI18n, NonConstantResourceId")
 @SuppressWarnings("ConstantConditions")
@@ -20,19 +28,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String PREFS_NAME = "UserSettings";
     private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
-    private String currentUsername; // Add this field
+    private String currentUsername;
+    private LinearLayout cityButtonsLayout;
+    private List<City> cityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Get username from intent or saved session
         currentUsername = getIntent().getStringExtra("username");
         if (currentUsername == null) {
-            // Try to get from SharedPreferences if not in intent
             SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
             currentUsername = prefs.getString("lastLoggedInUser", "default");
         }
 
-        // Load user-specific UI settings
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
         String backgroundColor = preferences.getString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "Default");
@@ -40,30 +47,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loadCityList();
+
         ConstraintLayout mainLayout = findViewById(R.id.mainLayout);
         applyBackgroundColor(backgroundColor, mainLayout);
 
-        Button buttonChampaign = findViewById(R.id.buttonChampaign);
-        Button buttonChicago = findViewById(R.id.buttonChicago);
-        Button buttonLA = findViewById(R.id.buttonLA);
+        cityButtonsLayout = findViewById(R.id.cityButtonsLayout);
+
         Button buttonAddLocation = findViewById(R.id.buttonAddLocation);
         Button buttonCustomizeUI = findViewById(R.id.buttonCustomizeUI);
         Button buttonLogout = findViewById(R.id.buttonLogout);
 
-        buttonChampaign.setOnClickListener(this);
-        buttonChicago.setOnClickListener(this);
-        buttonLA.setOnClickListener(this);
         buttonAddLocation.setOnClickListener(this);
         buttonCustomizeUI.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
-        applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA,
-                buttonAddLocation, buttonCustomizeUI, buttonLogout);
+        applyButtonColors(this, buttonColor, buttonAddLocation, buttonCustomizeUI, buttonLogout);
+        refreshCityButtons(buttonColor);
     }
 
-    // Modified to handle user-specific colors
+    // Helper method 1: apply the button colors to all buttons and ActionBar
     public static void applyButtonColors(Activity activity, String buttonColor, Button... buttons) {
-        int color = Color.BLUE; // Default color
+        int color = Color.BLUE;  // Default color
 
         switch (buttonColor) {
             case "Blue":
@@ -89,8 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    // Helper method 2: apply the background color to the layout
     public static void applyBackgroundColor(String backgroundColor, ViewGroup layout) {
-        int color = Color.WHITE;
+        int color = Color.WHITE;  // Default background color
 
         switch (backgroundColor) {
             case "White":
@@ -107,9 +113,121 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         layout.setBackgroundColor(color);
     }
 
+    private void loadCityList() {
+        cityList = new ArrayList<>();
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = preferences.getString(currentUsername + "_cities", "");
+
+        if (!json.isEmpty()) {
+            Type type = new TypeToken<ArrayList<City>>(){}.getType();
+            cityList = gson.fromJson(json, type);
+        }
+    }
+
+    private void saveCityList() {
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(cityList);
+        editor.putString(currentUsername + "_cities", json);
+        editor.apply();
+    }
+
+    private void refreshCityButtons(String buttonColor) {
+        cityButtonsLayout.removeAllViews();
+
+        for (City city : cityList) {
+            // Create horizontal layout for each city row
+            LinearLayout cityRow = new LinearLayout(this);
+            LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            rowParams.setMargins(0, 0, 0, 16); // bottom margin between rows
+            cityRow.setLayoutParams(rowParams);
+            cityRow.setOrientation(LinearLayout.HORIZONTAL);
+
+            // Create the city button
+            Button cityButton = new Button(this);
+            cityButton.setText(city.getName());
+            // Make city button take up most of the space
+            LinearLayout.LayoutParams cityButtonParams = new LinearLayout.LayoutParams(
+                    0,  // width of 0 with weight will make it fill available space
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            cityButtonParams.weight = 1; // This makes it take up all space except for delete button
+            cityButtonParams.setMargins(0, 0, 16, 0); // right margin for spacing between buttons
+            cityButton.setLayoutParams(cityButtonParams);
+
+            cityButton.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                intent.putExtra("city", city.getName());
+                intent.putExtra("username", currentUsername);
+                startActivity(intent);
+            });
+
+            // Create the delete button
+            Button deleteButton = new Button(this);
+            deleteButton.setText("X");
+            // Set fixed width for delete button
+            LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            deleteButton.setLayoutParams(deleteButtonParams);
+
+            deleteButton.setOnClickListener(v -> {
+                // Show confirmation dialog
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Delete City")
+                        .setMessage("Are you sure you want to delete " + city.getName() + "?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            cityList.remove(city);
+                            saveCityList();
+                            refreshCityButtons(buttonColor);
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            });
+
+            // Apply colors to both buttons
+            applyButtonColors(this, buttonColor, cityButton, deleteButton);
+
+            // Add both buttons to the row
+            cityRow.addView(cityButton);
+            cityRow.addView(deleteButton);
+
+            // Add the row to the main layout
+            cityButtonsLayout.addView(cityRow);
+        }
+    }
+
+    private void showAddCityDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add New City");
+
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("Add", (dialog, which) -> {
+            String cityName = input.getText().toString().trim();
+            if (!cityName.isEmpty()) {
+                City newCity = new City(cityName, 0.0, 0.0);
+                cityList.add(newCity);
+                saveCityList();
+
+                String buttonColor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+                        .getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
+                refreshCityButtons(buttonColor);
+            }
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
     private void handleLogout() {
-        // Don't clear theme preferences on logout anymore
-        // Instead, only clear session-related data
         SharedPreferences loginPrefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         SharedPreferences.Editor loginEditor = loginPrefs.edit();
         loginEditor.remove("lastLoggedInUser");
@@ -124,36 +242,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Intent intent;
-        switch (view.getId()) {
-            case R.id.buttonChampaign:
-                intent = new Intent(this, DetailsActivity.class);
-                intent.putExtra("city", "Champaign");
-                intent.putExtra("username", currentUsername); // Pass username to next activity
-                startActivity(intent);
-                break;
-            case R.id.buttonChicago:
-                intent = new Intent(this, DetailsActivity.class);
-                intent.putExtra("city", "Chicago");
-                intent.putExtra("username", currentUsername); // Pass username to next activity
-                startActivity(intent);
-                break;
-            case R.id.buttonLA:
-                intent = new Intent(this, DetailsActivity.class);
-                intent.putExtra("city", "Los Angeles");
-                intent.putExtra("username", currentUsername); // Pass username to next activity
-                startActivity(intent);
-                break;
-            case R.id.buttonAddLocation:
-                // Implement add location functionality
-                break;
-            case R.id.buttonCustomizeUI:
-                intent = new Intent(this, CustomizeUIActivity.class);
-                intent.putExtra("username", currentUsername); // Pass username to CustomizeUIActivity
-                startActivity(intent);
-                break;
-            case R.id.buttonLogout:
-                handleLogout();
-                break;
+        if (view.getId() == R.id.buttonAddLocation) {
+            showAddCityDialog();
+        } else if (view.getId() == R.id.buttonCustomizeUI) {
+            intent = new Intent(this, CustomizeUIActivity.class);
+            intent.putExtra("username", currentUsername);
+            startActivity(intent);
+        } else if (view.getId() == R.id.buttonLogout) {
+            handleLogout();
         }
     }
 }
