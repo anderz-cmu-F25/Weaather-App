@@ -61,36 +61,36 @@ public class LoginActivity extends AppCompatActivity {
      * Logs in the user. Exception should be catched and printed to the log
      */
     private void handleLogin() {
-            // Get username and password from EditText fields
-            String username = userNameEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
+        // Get username and password from EditText fields
+        String username = userNameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
-            // Validate input
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            try {
-                // Attempt login with AuthenticationService
-                boolean isAuthenticated = authService.login(username, password);
-                if (isAuthenticated) {
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    // Add these lines here ↓
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("username", username);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                    // End of new lines ↑
-                } else {
-                    Toast.makeText(this, "Login failed. Check your credentials.", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(this, "An error occurred!" + e, Toast.LENGTH_SHORT).show();
-                Log.e("LoginActivity", "An error occurred", e);
-            }
+        // Validate input
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        try {
+            // Attempt login with AuthenticationService
+            boolean isAuthenticated = authService.login(username, password);
+            if (isAuthenticated) {
+                Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+                // Add these lines here ↓
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("username", username);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+                // End of new lines ↑
+            } else {
+                Toast.makeText(this, "Login failed. Check your credentials.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "An error occurred!" + e, Toast.LENGTH_SHORT).show();
+            Log.e("LoginActivity", "An error occurred", e);
+        }
+    }
 
     /**
      * Register a user. Exception should be catched and printed to the log
