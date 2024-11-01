@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonLA = findViewById(R.id.buttonLA);
         Button buttonAddLocation = findViewById(R.id.buttonAddLocation);
         Button buttonCustomizeUI = findViewById(R.id.buttonCustomizeUI);
+        Button buttonLogout = findViewById(R.id.buttonLogout);
 
         // Set click listeners for existing buttons
         buttonChampaign.setOnClickListener(this);
@@ -51,10 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonLA.setOnClickListener(this);
         buttonAddLocation.setOnClickListener(this);
         buttonCustomizeUI.setOnClickListener(this);  // Add listener for "Customize UI" button
+        buttonLogout.setOnClickListener(this);
 
 
         // Apply the saved button color to all buttons and ActionBar
-        applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI);
+        applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI, buttonLogout);
     }
 
     // Helper method 1: apply the button colors to all buttons and ActionBar
@@ -111,6 +113,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         layout.setBackgroundColor(color);
     }
 
+    private void handleLogout() {
+        // Clear any user-specific data from SharedPreferences if needed
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();  // This clears all preferences
+        editor.apply();
+
+        // Create intent to return to login activity
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        // Clear the activity stack so user can't go back using back button
+        loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(loginIntent);
+        finish();  // Finish the current activity
+    }
+
     @Override
     public void onClick(View view) {
         Intent intent;
@@ -137,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Open the CustomizeUIActivity to customize the UI
                 intent = new Intent(this, CustomizeUIActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.buttonLogout:
+                // logout
+                handleLogout();
                 break;
         }
     }
