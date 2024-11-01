@@ -57,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Logs in the user. Exception should be catched and printed to the log
+     */
     private void handleLogin() {
             // Get username and password from EditText fields
             String username = userNameEditText.getText().toString();
@@ -85,10 +88,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 Toast.makeText(this, "An error occurred!" + e, Toast.LENGTH_SHORT).show();
+                Log.e("LoginActivity", "An error occurred", e);
             }
         }
 
-
+    /**
+     * Register a user. Exception should be catched and printed to the log
+     */
     private void handleRegister() {
         // Get username and password from EditText fields
         String username = userNameEditText.getText().toString();
