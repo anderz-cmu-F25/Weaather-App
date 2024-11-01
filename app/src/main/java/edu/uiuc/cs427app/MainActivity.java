@@ -17,28 +17,32 @@ import android.graphics.drawable.ColorDrawable;
 @SuppressWarnings("ConstantConditions")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    // Define SharedPreferences constants for saving user settings
     private static final String PREFS_NAME = "UserSettings";
     private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
+    private String currentUsername; // Add this field
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Load the selected UI settings (button and background color) from SharedPreferences
+        // Get username from intent or saved session
+        currentUsername = getIntent().getStringExtra("username");
+        if (currentUsername == null) {
+            // Try to get from SharedPreferences if not in intent
+            SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+            currentUsername = prefs.getString("lastLoggedInUser", "default");
+        }
+
+        // Load user-specific UI settings
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String buttonColor = preferences.getString(BUTTON_COLOR_KEY, "Default");
-        String backgroundColor = preferences.getString(BACKGROUND_COLOR_KEY, "Default");
+        String buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
+        String backgroundColor = preferences.getString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "Default");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Reference the main ConstraintLayout to apply user customizations
         ConstraintLayout mainLayout = findViewById(R.id.mainLayout);
-
-        // Apply the saved background color to the layout
         applyBackgroundColor(backgroundColor, mainLayout);
 
-        // Initialize other UI components (buttons)
         Button buttonChampaign = findViewById(R.id.buttonChampaign);
         Button buttonChicago = findViewById(R.id.buttonChicago);
         Button buttonLA = findViewById(R.id.buttonLA);
@@ -46,24 +50,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonCustomizeUI = findViewById(R.id.buttonCustomizeUI);
         Button buttonLogout = findViewById(R.id.buttonLogout);
 
-        // Set click listeners for existing buttons
         buttonChampaign.setOnClickListener(this);
         buttonChicago.setOnClickListener(this);
         buttonLA.setOnClickListener(this);
         buttonAddLocation.setOnClickListener(this);
-        buttonCustomizeUI.setOnClickListener(this);  // Add listener for "Customize UI" button
+        buttonCustomizeUI.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
-
-        // Apply the saved button color to all buttons and ActionBar
-        applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA, buttonAddLocation, buttonCustomizeUI, buttonLogout);
+        applyButtonColors(this, buttonColor, buttonChampaign, buttonChicago, buttonLA,
+                buttonAddLocation, buttonCustomizeUI, buttonLogout);
     }
 
-    // Helper method 1: apply the button colors to all buttons and ActionBar
+    // Modified to handle user-specific colors
     public static void applyButtonColors(Activity activity, String buttonColor, Button... buttons) {
-        int color = Color.BLUE;
+        int color = Color.BLUE; // Default color
 
-        // Determine the color based on the saved preference
         switch (buttonColor) {
             case "Blue":
                 color = Color.BLUE;
@@ -74,15 +75,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case "Green":
                 color = Color.GREEN;
                 break;
-            // Add more colors as needed
         }
 
-        // Apply the color to each button
         for (Button button : buttons) {
             button.setBackgroundColor(color);
         }
 
-        // Apply the same color to the ActionBar (top bar) if applicable
         if (activity instanceof AppCompatActivity) {
             AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
             if (appCompatActivity.getSupportActionBar() != null) {
@@ -91,11 +89,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // Helper method 2: apply the background color to the layout
     public static void applyBackgroundColor(String backgroundColor, ViewGroup layout) {
-        int color = Color.WHITE;  // Default background color
+        int color = Color.WHITE;
 
-        // Determine the color based on the saved preference
         switch (backgroundColor) {
             case "White":
                 color = Color.WHITE;
@@ -106,26 +102,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case "Gray":
                 color = Color.GRAY;
                 break;
-            // Add more colors as needed
         }
 
-        // Apply the color to the layout
         layout.setBackgroundColor(color);
     }
 
     private void handleLogout() {
-        // Clear any user-specific data from SharedPreferences if needed
-        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();  // This clears all preferences
-        editor.apply();
+        // Don't clear theme preferences on logout anymore
+        // Instead, only clear session-related data
+        SharedPreferences loginPrefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor loginEditor = loginPrefs.edit();
+        loginEditor.remove("lastLoggedInUser");
+        loginEditor.apply();
 
-        // Create intent to return to login activity
         Intent loginIntent = new Intent(this, LoginActivity.class);
-        // Clear the activity stack so user can't go back using back button
         loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(loginIntent);
-        finish();  // Finish the current activity
+        finish();
     }
 
     @Override
@@ -135,28 +128,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.buttonChampaign:
                 intent = new Intent(this, DetailsActivity.class);
                 intent.putExtra("city", "Champaign");
+                intent.putExtra("username", currentUsername); // Pass username to next activity
                 startActivity(intent);
                 break;
             case R.id.buttonChicago:
                 intent = new Intent(this, DetailsActivity.class);
                 intent.putExtra("city", "Chicago");
+                intent.putExtra("username", currentUsername); // Pass username to next activity
                 startActivity(intent);
                 break;
             case R.id.buttonLA:
                 intent = new Intent(this, DetailsActivity.class);
                 intent.putExtra("city", "Los Angeles");
+                intent.putExtra("username", currentUsername); // Pass username to next activity
                 startActivity(intent);
                 break;
             case R.id.buttonAddLocation:
-                // Implement this action to add a new location to the list of locations
+                // Implement add location functionality
                 break;
             case R.id.buttonCustomizeUI:
-                // Open the CustomizeUIActivity to customize the UI
                 intent = new Intent(this, CustomizeUIActivity.class);
+                intent.putExtra("username", currentUsername); // Pass username to CustomizeUIActivity
                 startActivity(intent);
                 break;
             case R.id.buttonLogout:
-                // logout
                 handleLogout();
                 break;
         }

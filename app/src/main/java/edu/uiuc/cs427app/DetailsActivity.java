@@ -15,50 +15,51 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 @SuppressWarnings("ConstantConditions")
 public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    // Define SharedPreferences constants for saving user settings
     private static final String PREFS_NAME = "UserSettings";
     private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
 
     private String cityName;
+    private String currentUsername; // Add this field
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Load the selected UI settings (button and background color) from SharedPreferences
+        // Get username from intent
+        currentUsername = getIntent().getStringExtra("username");
+        if (currentUsername == null) {
+            // Fallback to shared preferences if not in intent
+            SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+            currentUsername = prefs.getString("lastLoggedInUser", "default");
+        }
+
+        // Load user-specific UI settings
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String buttonColor = preferences.getString(BUTTON_COLOR_KEY, "Default");
-        String backgroundColor = preferences.getString(BACKGROUND_COLOR_KEY, "Default");
+        String buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
+        String backgroundColor = preferences.getString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "Default");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        // Reference the details ConstraintLayout to apply user customizations
         ConstraintLayout detailsLayout = findViewById(R.id.detailsLayout);
-
-        // Apply the saved background color to the layout
         MainActivity.applyBackgroundColor(backgroundColor, detailsLayout);
 
-        // Process the Intent payload that has opened this Activity and show the information accordingly
         this.cityName = getIntent().getStringExtra("city");
         String welcome = "Welcome to the " + this.cityName;
         String cityWeatherInfo = "Detailed information about the weather of " + this.cityName;
 
-        // Initializing the GUI elements
         TextView welcomeMessage = findViewById(R.id.welcomeText);
         TextView cityInfoMessage = findViewById(R.id.cityInfo);
 
         welcomeMessage.setText(welcome);
         cityInfoMessage.setText(cityWeatherInfo);
-        // Get the weather information from a Service that connects to a weather server and show the results
 
         Button wxButton = findViewById(R.id.wxButton);
         Button buttonShowMap = findViewById(R.id.mapButton);
         wxButton.setOnClickListener(this);
         buttonShowMap.setOnClickListener(this);
 
-        // Apply the saved button color to all buttons and ActionBar
         MainActivity.applyButtonColors(this, buttonColor, wxButton, buttonShowMap);
     }
-
 
     @Override
     public void onClick(View view) {
@@ -67,11 +68,12 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.wxButton:
                 intent = new Intent(this, ShowWeatherActivity.class);
                 intent.putExtra("city", this.cityName);
+                intent.putExtra("username", currentUsername); // Pass username to weather activity
                 startActivity(intent);
                 break;
             case R.id.mapButton:
+                // If you implement map functionality, pass username here too
                 break;
         }
     }
 }
-
