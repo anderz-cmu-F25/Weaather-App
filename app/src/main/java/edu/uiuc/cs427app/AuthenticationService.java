@@ -189,7 +189,7 @@ public class AuthenticationService {
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
-
+        //Create the database
         @Override
         public void onCreate(SQLiteDatabase db) {
             // db.execSQL("CREATE TABLE users (username TEXT PRIMARY KEY, password TEXT);");
@@ -209,7 +209,7 @@ public class AuthenticationService {
                     + "FOREIGN KEY (username) REFERENCES users(username)"
                     + ");");
         }
-
+        //Upgrade the database
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS users");

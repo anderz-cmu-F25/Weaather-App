@@ -22,15 +22,15 @@ public class User {
     public String getButtonColor() {
         return buttonColor;
     }
-
+    // Set the button color theme preference
     public void setButtonColor(String buttonColor) {
         this.buttonColor = buttonColor;
     }
-
+    // Get the background color theme preference
     public String getBackgroundColor() {
         return backgroundColor;
     }
-
+    // Set the background color theme preference
     public void setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
