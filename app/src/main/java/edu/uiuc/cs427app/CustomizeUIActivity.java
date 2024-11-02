@@ -16,6 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 @SuppressLint("SetTextI18n, NonConstantResourceId")
 @SuppressWarnings("ConstantConditions")
+
+/**
+ * CustomizeUIActivity allows users to customize their application's user interface
+ * by selecting button and background colors. Users can save their customizations,
+ * view saved settings, apply them, and revert to default settings.
+ */
 public class CustomizeUIActivity extends AppCompatActivity {
 
     public static final String PREFS_NAME = "UserSettings";
@@ -27,6 +33,12 @@ public class CustomizeUIActivity extends AppCompatActivity {
     private int savedUICount = 0;
     private String currentUsername; // Add this field to track current user
 
+    /**
+     * Initializes the activity, retrieves user settings from SharedPreferences,
+     * and sets up the user interface components for customizing the UI.
+     *
+     * @param savedInstanceState A Bundle containing the activity's previously saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Get current username from the intent
@@ -109,7 +121,7 @@ public class CustomizeUIActivity extends AppCompatActivity {
 
         defaultUIButton.setOnClickListener(v -> {
             SharedPreferences.Editor editor = preferences.edit();
-            // Save default settings with user-specific keys
+            //Save default settings with user-specific keys
             editor.putString(currentUsername + "_" + BUTTON_COLOR_KEY, "Blue");
             editor.putString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "White");
             editor.apply();
@@ -122,12 +134,24 @@ public class CustomizeUIActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * For Customizing the UI
+     * Converts the selected radio button ID to the corresponding color string.
+     *
+     * @param colorId The ID of the selected radio button.
+     * @return The name of the color corresponding to the radio button, or "Default" if not found.
+     */
     private String getColorFromId(int colorId) {
         String resourceName = getResources().getResourceEntryName(colorId);
         String[] parts = resourceName.split("radioButton");
         return parts.length > 1 ? parts[1] : "Default";
     }
 
+    /**
+     * Loads saved UI customizations from SharedPreferences and displays them in the layout.
+     *
+     * @param savedCustomizationsLayout The layout where saved customizations will be displayed.
+     */
     private void loadSavedCustomizations(LinearLayout savedCustomizationsLayout) {
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         int savedUICount = preferences.getInt(currentUsername + "_savedUICount", 0);
@@ -164,6 +188,11 @@ public class CustomizeUIActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Applies a previously saved UI customization as the current user's settings.
+     *
+     * @param uiKey The key for the saved UI customization to apply.
+     */
     private void applySavedCustomization(String uiKey) {
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String buttonColor = preferences.getString(uiKey + "_buttonColor", "Default");
@@ -171,13 +200,13 @@ public class CustomizeUIActivity extends AppCompatActivity {
         String description = preferences.getString(uiKey + "_description", "Default UI");
 
         SharedPreferences.Editor editor = preferences.edit();
-        // Save the applied customization as the new default for the user
+        //Save the applied customization as the new default for the user
         editor.putString(currentUsername + "_" + BUTTON_COLOR_KEY, buttonColor);
         editor.putString(currentUsername + "_" + BACKGROUND_COLOR_KEY, backgroundColor);
         editor.putInt(currentUsername + "_savedUICount", savedUICount);
         editor.apply();
 
-        // Apply changes to MainActivity as well
+        //Apply changes to MainActivity as well
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("username", currentUsername);
@@ -186,6 +215,11 @@ public class CustomizeUIActivity extends AppCompatActivity {
         Toast.makeText(this, "Applied " + description, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Deletes a saved UI customization from SharedPreferences.
+     *
+     * @param uiKey The key for the saved UI customization to delete.
+     */
     private void deleteSavedCustomization(String uiKey) {
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

@@ -13,6 +13,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 @SuppressLint("SetTextI18n, NonConstantResourceId")
 @SuppressWarnings("ConstantConditions")
+
+/**
+ * DetailsActivity class provides detailed information about a specific city.
+ * It retrieves user preferences for UI customization and handles navigation
+ * to a weather display or map view based on user interactions.
+ */
 public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String PREFS_NAME = "UserSettings";

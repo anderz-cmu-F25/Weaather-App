@@ -12,6 +12,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * AuthenticationService class handles user authentication and data storage.
+ * It provides methods for user registration, login, theme preference management,
+ * and city management for individual users.
+ *
+ * This service uses SQLite as its local database to store user credentials and
+ * associated cities, and SharedPreferences for managing user interface settings.
+ */
 public class AuthenticationService {
 
     private static final String ACCOUNT_TYPE = "edu.uiuc.cs427app";
@@ -30,12 +38,19 @@ public class AuthenticationService {
         this.sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    // Register a new user
+    /**
+     * Registers a new user by storing their credentials in the database.
+     * It checks for existing usernames to prevent duplicates.
+     *
+     * @param username The username of the new user.
+     * @param password The password for the new user.
+     * @return true if registration is successful, false if username already exists or an error occurs.
+     */
     public boolean register(String username, String password) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         
         try {
-            // Check if username already exists
+            //Check if username already exists
             Cursor cursor = db.query("users", 
                 new String[]{"username"}, 
                 "username = ?",
@@ -63,7 +78,7 @@ public class AuthenticationService {
         }
     }
 
-    // Login an existing user
+    //Login an existing user
     public boolean login(String username, String password) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         
@@ -89,7 +104,7 @@ public class AuthenticationService {
         }
     }
 
-    // Fetch user data by username
+    //Fetch user data by username
     public User getUser(String username) {
         Cursor cursor = dbHelper.getReadableDatabase().query(
                 "users",
@@ -109,7 +124,7 @@ public class AuthenticationService {
         return null;
     }
 
-    // Save theme preferences for the current user
+    //Save theme preferences for the current user
     public void saveUserTheme(String username, String buttonColor, String backgroundColor) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(username + "_" + BUTTON_COLOR_KEY, buttonColor);
@@ -117,14 +132,14 @@ public class AuthenticationService {
         editor.apply();
     }
 
-    // Load theme preferences for the current user
+    //Load theme preferences for the current user
     public String[] loadUserTheme(String username) {
         String buttonColor = sharedPreferences.getString(username + "_" + BUTTON_COLOR_KEY, "Default");
         String backgroundColor = sharedPreferences.getString(username + "_" + BACKGROUND_COLOR_KEY, "Default");
         return new String[]{buttonColor, backgroundColor};
     }
 
-    // Add a city for a user
+    //Add a city for a user
     public void addCity(String username, City city) {
         ContentValues values = new ContentValues();
         values.put("username", username);
@@ -134,7 +149,7 @@ public class AuthenticationService {
         dbHelper.getWritableDatabase().insert("cities", null, values);
     }
 
-    // Remove a city for a user
+    //Remove a city for a user
     public void removeCity(String username, String cityName) {
         dbHelper.getWritableDatabase().delete("cities", "username = ? AND city_name = ?", new String[]{username, cityName});
     }
@@ -163,7 +178,7 @@ public class AuthenticationService {
         return cityList;
     }
 
-    // Inner Database Helper class
+    //Inner Database Helper class
     private static class DatabaseHelper extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "cs427app.db";
         private static final int DATABASE_VERSION = 1;

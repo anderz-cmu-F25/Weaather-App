@@ -21,8 +21,28 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+suppress non relevant warnings
+*/
 @SuppressLint("SetTextI18n, NonConstantResourceId")
 @SuppressWarnings("ConstantConditions")
+
+/**
+ * MainActivity is the primary entry point for the user interface after logging in.
+ *
+ * This activity handles user interactions related to managing a list of cities, including
+ * adding, viewing, and deleting cities. It retrieves user-specific settings from SharedPreferences,
+ * such as the logged-in username and UI theme settings (button and background colors).
+ *
+ * Main functionalities of this class include:
+ * - Loading and saving the user's city list using JSON serialization with Gson.
+ * - Applying user-defined colors to buttons and the main layout based on preferences.
+ * - Handling click events for various buttons, such as adding a new city, customizing the UI, and logging out.
+ * - Displaying city details and managing the layout of city buttons dynamically.
+ *
+ * This activity extends AppCompatActivity and implements View.OnClickListener, allowing for integration
+ * with the Android Action Bar and responsive UI interactions.
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String PREFS_NAME = "UserSettings";
@@ -35,6 +55,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String currentUsername;
     private LinearLayout cityButtonsLayout;
     private List<City> cityList;
+
+    /**
+     * Initializes the activity, sets user-specific preferences, and configures UI elements.
+     *
+     * This method is called when the activity is created. It retrieves the logged-in username
+     * from the intent and updates the action bar title to include the username.
+     * The method also saves the current username in SharedPreferences to track the last logged-in user.
+     *
+     * This method also:
+     * - Loads the user's saved city list.
+     * - Retrieves and applies user-specific theme settings (button and background colors).
+     * - Sets up click listeners for main action buttons (Add Location, Customize UI, and Logout).
+     * - Calls methods to apply color settings to UI elements and refresh city buttons in the layout.
+     *
+     * @param savedInstanceState a Bundle containing the activity's previously saved state, if available
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +117,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    // Helper method 1: apply the button colors to all buttons and ActionBar
+    //Helper method 1: apply the button colors to all buttons and ActionBar
+    /**
+     * Applies the specified color to a set of buttons and, if applicable, the activity's action bar.
+     *
+     * This method changes the background color of each button in the provided array to the specified color.
+     * The color defaults to blue if an unrecognized color name is provided.
+     *
+     * @param activity the activity containing the buttons and optional action bar
+     * @param buttonColor the name of the color to apply (e.g., "Blue", "Red", "Green")
+     * @param buttons the buttons to which the color will be applied
+     */
     public static void applyButtonColors(Activity activity, String buttonColor, Button... buttons) {
         int color = Color.BLUE;  // Default color
 
@@ -109,7 +155,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // Helper method 2: apply the background color to the layout
+    //Helper method 2: apply the background color to the layout
+    /**
+     * Applies the specified background color to the given layout based on user choice.
+     *
+     * This method sets the background color of a layout based on the provided color
+     * name. It defaults to white if an unrecognized color is specified.
+     *
+     * @param backgroundColor the name of the color to apply (e.g., "White", "LightGray", "Gray")
+     * @param layout the layout to which the background color will be applied
+     */
     public static void applyBackgroundColor(String backgroundColor, ViewGroup layout) {
         int color = Color.WHITE;  // Default background color
 
@@ -127,7 +182,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         layout.setBackgroundColor(color);
     }
-
+/* Using sharedPreferences which will be stored in an xml file in the app data folder */
+    /**
+     * Loads the saved city list from shared preferences for the current user.
+     *
+     * This method retrieves the JSON string of the city list from shared preferences,
+     * deserializes it using Gson, and populates the `cityList` variable. If no saved
+     * data is found, an empty city list is initialized.
+     */
     private void loadCityList() {
         cityList = new ArrayList<>();
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -140,6 +202,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Saves the current city list to shared preferences.
+     *
+     * This method converts the city list to a JSON string using Gson and stores it
+     * in shared preferences under a key specific to the current user. The data is
+     * saved asynchronously to persist the user's city list across sessions.
+     */
     private void saveCityList() {
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -149,11 +218,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.apply();
     }
 
+    /**
+     * Refreshes the display of city buttons within the layout based on the given color preference.
+     *
+     * This method dynamically rebuilds a list of buttons for each city in the city list, applying
+     * the specified button color. For each city, it creates:
+     * - A clickable button to display city details.
+     * - A delete button "X" with a confirmation dialog for removing the city.
+     *
+     * The layout is cleared and updated to reflect any changes to the city list, such as additions
+     * or deletions, by calling this method.
+     *
+     * @param buttonColor the color preference to apply to each city button and delete button
+     */
     private void refreshCityButtons(String buttonColor) {
         cityButtonsLayout.removeAllViews();
 
         for (City city : cityList) {
-            // Create horizontal layout for each city row
+            //Create horizontal layout for each city row
             LinearLayout cityRow = new LinearLayout(this);
             LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -163,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             cityRow.setLayoutParams(rowParams);
             cityRow.setOrientation(LinearLayout.HORIZONTAL);
 
-            // Create the city button
+            //Create the city button
             Button cityButton = new Button(this);
             cityButton.setText(city.getName());
             // Make city button take up most of the space
@@ -171,8 +253,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     0,  // width of 0 with weight will make it fill available space
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
-            cityButtonParams.weight = 1; // This makes it take up all space except for delete button
-            cityButtonParams.setMargins(0, 0, 16, 0); // right margin for spacing between buttons
+            cityButtonParams.weight = 1; // take up all space except for delete button
+            cityButtonParams.setMargins(0, 0, 16, 0); //right margin for spacing between buttons
             cityButton.setLayoutParams(cityButtonParams);
 
             cityButton.setOnClickListener(v -> {
@@ -182,11 +264,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             });
 
-            // Create the delete button
+            //Create the delete button
             Button deleteButton = new Button(this);
             deleteButton.setText("X");
 
-            // Set fixed width for delete button
+            //Set fixed width for delete button
             LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
@@ -194,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             deleteButton.setLayoutParams(deleteButtonParams);
 
             deleteButton.setOnClickListener(v -> {
-                // Show confirmation dialog
+                //Show confirmation dialog
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Delete City")
                         .setMessage("Are you sure you want to delete " + city.getName() + "?")
@@ -207,18 +289,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .show();
             });
 
-            // Apply colors to both buttons
+            //Apply colors to both buttons
             applyButtonColors(this, buttonColor, cityButton, deleteButton);
 
-            // Add both buttons to the row
+            //Add both buttons to the row
             cityRow.addView(cityButton);
             cityRow.addView(deleteButton);
 
-            // Add the row to the main layout
+            //Add the row to the main layout
             cityButtonsLayout.addView(cityRow);
         }
     }
 
+    /**
+     * Opens a dialog for the user to add a new city to the city list.
+     *
+     * The dialog allows the user to enter a city name. If the input is valid (non-empty),
+     * a new City object is created and added to the city list, then saved. After adding,
+     * the method refreshes city buttons based on the user's selected color preferences.
+     * The dialog includes "Add" and "Cancel" options.
+     */
     private void showAddCityDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add New City");
@@ -243,6 +333,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.show();
     }
 
+    /**
+     * Logs out the current user by clearing login information from shared preferences
+     * and redirects to the login activity.
+     *
+     * This method removes the last logged-in user's information from shared preferences
+     * and starts the LoginActivity with flags to clear the back stack, ensuring the user
+     * cannot return to the previous screen. It also finishes the current activity.
+     */
     private void handleLogout() {
         SharedPreferences loginPrefs = getSharedPreferences(LOGIN_PREFS, MODE_PRIVATE);
         loginPrefs.edit().remove(LAST_LOGGED_IN_USER).apply();
@@ -253,6 +351,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
+    /**
+     * Handles click events for various buttons in the main part of program.
+     *
+     * Based on the clicked view's ID, this method:
+     * - Opens a dialog to add a new city if the "Add Location" button is clicked.
+     * - Launches the CustomizeUIActivity with the current username if the "Customize UI" button is clicked.
+     * - Calls the logout handler to log out the current user if the "Logout" button is clicked.
+     *
+     * @param view the view that was clicked, used to determine the action to perform
+     */
     @Override
     public void onClick(View view) {
         Intent intent;

@@ -10,6 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+/**
+ * LoginActivity is responsible for handling user login and registration.
+ * It provides an interface for users to enter their credentials,
+ * authenticates users, and manages the transition
+ * to the main application page upon successful authentication.
+ *
+ * LoginActivity utilizes the AuthenticationService for managing user
+ * authentication processes and SharedPreferences to load user-specific
+ * UI settings.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText userNameEditText;
@@ -46,7 +56,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Logs in the user. Exception should be catched and printed to the log
+     * Handles the login process for the user. This method retrieves the
+     * username and password from the input fields, validates them,
+     * and attempts to authenticate the user through the AuthenticationService.
+     * If successful, it loads user-specific theme settings and navigates
+     * to the MainActivity. Otherwise, it displays an error message.
+     * Any exceptions encountered during the process are logged.
      */
     private void handleLogin() {
         String username = userNameEditText.getText().toString();
@@ -85,7 +100,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Register a user. Exception should be catched and printed to the log
+     * Handles the registration process for a new user. This method retrieves
+     * the username and password from the input fields, validates them (making
+     * sure user doesnt already exist) and
+     * attempts to register the user using the AuthenticationService. If
+     * registration is successful, it navigates to the MainActivity. Otherwise,
+     * it displays an error message. Any exceptions are logged.
      */
     private void handleRegister() {
         // Get username and password from EditText fields
