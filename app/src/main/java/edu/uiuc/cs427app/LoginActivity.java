@@ -24,10 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText userNameEditText;
     private EditText passwordEditText;
-    private Button loginButton;
-    private Button backButton;
     private AuthenticationService authService;
-    private Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         // Find views by ID
         userNameEditText = findViewById(R.id.userName);
         passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login);
-        backButton = findViewById(R.id.back);
-        registerButton = findViewById(R.id.register);
+        Button loginButton = findViewById(R.id.login);
+        Button backButton = findViewById(R.id.back);
+        Button registerButton = findViewById(R.id.register);
 
         // Set up button listeners
         loginButton.setOnClickListener(v -> handleLogin());

@@ -1,5 +1,6 @@
 package edu.uiuc.cs427app;
 
+import android.annotation.SuppressLint;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentValues;
@@ -11,6 +12,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+@SuppressLint("Range")
 
 /**
  * AuthenticationService class handles user authentication and data storage.
