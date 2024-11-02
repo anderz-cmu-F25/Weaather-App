@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             currentUsername = prefs.getString(LAST_LOGGED_IN_USER, "default");
         }
 
+        //Set title to include the logged in username
+        getSupportActionBar().setTitle(getString(R.string.app_name_with_user, currentUsername));
+
         // Save current username to SharedPreferences to keep track of the last logged-in user
         SharedPreferences loginPrefs = getSharedPreferences(LOGIN_PREFS, MODE_PRIVATE);
         loginPrefs.edit().putString(LAST_LOGGED_IN_USER, currentUsername).apply();
