@@ -18,10 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 @SuppressWarnings("ConstantConditions")
 public class CustomizeUIActivity extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "UserSettings";
-    private static final String BUTTON_COLOR_KEY = "button_color";
-    private static final String BACKGROUND_COLOR_KEY = "background_color";
-    private static final String UI_PREFIX = "SavedUI_";
+    public static final String PREFS_NAME = "UserSettings";
+    public static final String BUTTON_COLOR_KEY = "button_color";
+    public static final String BACKGROUND_COLOR_KEY = "background_color";
+    public static final String UI_PREFIX = "SavedUI_";
 
     private boolean isExpanded = false;
     private int savedUICount = 0;
@@ -59,6 +59,7 @@ public class CustomizeUIActivity extends AppCompatActivity {
         buttonColorGroup.check(R.id.radioButtonBlue);
         backgroundColorGroup.check(R.id.radioButtonWhite);
 
+        // Save the selected UI customization
         saveButton.setOnClickListener(v -> {
             int selectedButtonColorId = buttonColorGroup.getCheckedRadioButtonId();
             String buttonColorSelected = getColorFromId(selectedButtonColorId);
@@ -81,14 +82,17 @@ public class CustomizeUIActivity extends AppCompatActivity {
 
             Toast.makeText(CustomizeUIActivity.this, "Customization Saved: " + uiDescription, Toast.LENGTH_SHORT).show();
 
+            // Automatically expand the saved customizations view if not already expanded
             if (!isExpanded) {
                 savedCustomizationsLayout.setVisibility(View.VISIBLE);
                 viewButton.setText("Hide Saved Customizations");
                 isExpanded = true;
             }
 
+            // Load the saved customizations to display the new theme in the list
             loadSavedCustomizations(savedCustomizationsLayout);
         });
+
 
         viewButton.setOnClickListener(v -> {
             if (isExpanded) {
@@ -142,9 +146,7 @@ public class CustomizeUIActivity extends AppCompatActivity {
 
                 Button applyButton = new Button(this);
                 applyButton.setText("Apply " + description);
-                applyButton.setOnClickListener(v1 -> {
-                    applySavedCustomization(uiKey);
-                });
+                applyButton.setOnClickListener(v1 -> applySavedCustomization(uiKey));
 
                 Button deleteButton = new Button(this);
                 deleteButton.setText("Delete " + description);
@@ -169,12 +171,16 @@ public class CustomizeUIActivity extends AppCompatActivity {
         String description = preferences.getString(uiKey + "_description", "Default UI");
 
         SharedPreferences.Editor editor = preferences.edit();
+        // Save the applied customization as the new default for the user
         editor.putString(currentUsername + "_" + BUTTON_COLOR_KEY, buttonColor);
         editor.putString(currentUsername + "_" + BACKGROUND_COLOR_KEY, backgroundColor);
+        editor.putInt(currentUsername + "_savedUICount", savedUICount);
         editor.apply();
 
+        // Apply changes to MainActivity as well
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("username", currentUsername);
         startActivity(intent);
 
         Toast.makeText(this, "Applied " + description, Toast.LENGTH_SHORT).show();

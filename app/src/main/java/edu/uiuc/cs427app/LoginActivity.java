@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,26 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.register);
 
         // Set up button listeners
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleLogin();
-            }
-        });
+        loginButton.setOnClickListener(v -> handleLogin());
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleRegister();
-            }
-        });
+        registerButton.setOnClickListener(v -> handleRegister());
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Go back to the previous screen or finish the activity
-                finish();
-            }
+        backButton.setOnClickListener(v -> {
+            // Go back to the previous screen or finish the activity
+            finish();
         });
     }
 
@@ -61,28 +49,32 @@ public class LoginActivity extends AppCompatActivity {
      * Logs in the user. Exception should be catched and printed to the log
      */
     private void handleLogin() {
-        // Get username and password from EditText fields
         String username = userNameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        // Validate input
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
             return;
         }
 
         try {
-            // Attempt login with AuthenticationService
             boolean isAuthenticated = authService.login(username, password);
             if (isAuthenticated) {
                 Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                // Add these lines here ↓
+
+                // Load user-specific theme settings
+                SharedPreferences preferences = getSharedPreferences(CustomizeUIActivity.PREFS_NAME, MODE_PRIVATE);
+                String buttonColor = preferences.getString(username + "_" + CustomizeUIActivity.BUTTON_COLOR_KEY, "Default");
+                String backgroundColor = preferences.getString(username + "_" + CustomizeUIActivity.BACKGROUND_COLOR_KEY, "Default");
+
+                // Pass these as extras to MainActivity so it can apply the theme
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("username", username);
+                intent.putExtra("buttonColor", buttonColor);
+                intent.putExtra("backgroundColor", backgroundColor);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
-                // End of new lines ↑
             } else {
                 Toast.makeText(this, "Login failed. Check your credentials.", Toast.LENGTH_SHORT).show();
             }

@@ -28,27 +28,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String PREFS_NAME = "UserSettings";
     private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
+
+    private static final String LOGIN_PREFS = "LoginPrefs";
+    private static final String LAST_LOGGED_IN_USER = "lastLoggedInUser";
+
     private String currentUsername;
     private LinearLayout cityButtonsLayout;
     private List<City> cityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Retrieve the last logged-in username from SharedPreferences
         currentUsername = getIntent().getStringExtra("username");
         if (currentUsername == null) {
-            SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-            currentUsername = prefs.getString("lastLoggedInUser", "default");
+            SharedPreferences prefs = getSharedPreferences(LOGIN_PREFS, MODE_PRIVATE);
+            currentUsername = prefs.getString(LAST_LOGGED_IN_USER, "default");
         }
 
+        // Save current username to SharedPreferences to keep track of the last logged-in user
+        SharedPreferences loginPrefs = getSharedPreferences(LOGIN_PREFS, MODE_PRIVATE);
+        loginPrefs.edit().putString(LAST_LOGGED_IN_USER, currentUsername).apply();
+
+        setContentView(R.layout.activity_main);
+        loadCityList();
+
+        // Load and apply user-specific theme settings
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
         String backgroundColor = preferences.getString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "Default");
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        loadCityList();
-
+        // Apply background and button colors
         ConstraintLayout mainLayout = findViewById(R.id.mainLayout);
         applyBackgroundColor(backgroundColor, mainLayout);
 
@@ -65,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         applyButtonColors(this, buttonColor, buttonAddLocation, buttonCustomizeUI, buttonLogout);
         refreshCityButtons(buttonColor);
     }
+
 
     // Helper method 1: apply the button colors to all buttons and ActionBar
     public static void applyButtonColors(Activity activity, String buttonColor, Button... buttons) {
@@ -170,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Create the delete button
             Button deleteButton = new Button(this);
             deleteButton.setText("X");
+
             // Set fixed width for delete button
             LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -228,10 +241,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void handleLogout() {
-        SharedPreferences loginPrefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor loginEditor = loginPrefs.edit();
-        loginEditor.remove("lastLoggedInUser");
-        loginEditor.apply();
+        SharedPreferences loginPrefs = getSharedPreferences(LOGIN_PREFS, MODE_PRIVATE);
+        loginPrefs.edit().remove(LAST_LOGGED_IN_USER).apply();
 
         Intent loginIntent = new Intent(this, LoginActivity.class);
         loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
