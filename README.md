@@ -110,19 +110,24 @@ Updated due dates on those critical tasks as needed.  Most should be done this w
 
 <b>Week 5</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: meduk2,shuqinz2,nxie3,shijief2,shuqih3,yg11,keyuanc2,ryanef2
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: Entire team was present.  Discussed progress on milestone 3<br>
+Ready to submit however some code comments attribution were still needed.<br>
+Asked if Ander Zhu could capture the video and submit. <br>
+Discussed Milestone 4 Weather already worked on in anticipation of MS 4 release<br>
+Tasks for next week may be adjusted after MS4 docs are reviewed.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| meduk2         |Met with team, agenda, timeline. Assisted where needed implemented some functionality gaps|follow up with Ander on video, ask TA where to turn in, review and start work on MS4, peer review|
+| shuqinz2       |Completed RegisterActivity and LoginActivity|Complete MS3 video, peer review|
+| nxie3          |Completed MainActivity helped with bugs|Review code, Offer assistance where needed, peer review |
+| shijief2       |Worked on CityActivity and WeatherActivity|Continue working on CityActivity and WeatherActivity for MS 4|
+| shuqih3        |Worked on WeatherService and LLMService|Continue working on WeatherService and LLMService, offer assistance where needed, peer review|
+| yg11           |Worked on MapService and ShowMapActivity|Continue working on MapService and ShowMapActivity, offer assistance where needed, peer review|
+| keyuanc2       |Completed AuthenticationService, User, helped with bugs|offer assistance where needed, peer review|
+| ryanef2        |Completed City task and CityListActivity|Review code, Offer assistance where needed, peer review|
 </br>
 
 
