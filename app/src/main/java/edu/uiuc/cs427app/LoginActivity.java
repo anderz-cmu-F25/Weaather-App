@@ -122,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
                 // Optionally automatically log them in and go to main activity
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("username", username);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
