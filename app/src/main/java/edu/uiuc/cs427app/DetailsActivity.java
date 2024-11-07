@@ -78,7 +78,10 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(intent);
                 break;
             case R.id.mapButton:
-                // If you implement map functionality, pass username here too
+                intent = new Intent(this, ShowMapActivity.class);
+                intent.putExtra("city", this.cityName);
+                intent.putExtra("username", currentUsername); // Pass username to map activity
+                startActivity(intent);
                 break;
         }
     }
