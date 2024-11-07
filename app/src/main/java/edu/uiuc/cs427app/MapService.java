@@ -1,6 +1,9 @@
 package edu.uiuc.cs427app;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
