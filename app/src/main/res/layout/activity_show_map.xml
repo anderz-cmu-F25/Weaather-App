@@ -18,18 +18,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"/>
 
         <TextView
             android:id="@+id/latLong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"/>
 
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
