@@ -13,5 +13,6 @@
 # ignore .gradle directory
 .gradle
 
-# ignore local.properties file
+# ignore local.properties file and secrets.properties file
 local.properties
+secrets.properties
