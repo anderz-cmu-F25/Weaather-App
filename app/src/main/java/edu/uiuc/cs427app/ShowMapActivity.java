@@ -91,7 +91,7 @@ public class ShowMapActivity extends AppCompatActivity implements View.OnClickLi
         // Generate the map URL using the city's name
         String mapUrl = null;
         try {
-            mapUrl = String.format("https://www.google.com/maps/embed/v1/place?key=AIzaSyD_WTcRw-orxo_kRR-p0BbrWSsP2Zemorc&q=%s", getApiKey(), URLEncoder.encode(cityName, StandardCharsets.UTF_8.name()));
+            mapUrl = String.format("https://www.google.com/maps/embed/v1/place?key=AIzaSyD_WTcRw-orxo_kRR-p0BbrWSsP2Zemorc&q=%s", URLEncoder.encode(cityName, StandardCharsets.UTF_8.name()));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
