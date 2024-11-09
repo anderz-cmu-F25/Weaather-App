@@ -82,7 +82,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
                 .build();
 
         WeatherService weatherService = retrofit.create(WeatherService.class);
-        Call<WeatherResponse> call = weatherService.getWeatherData(city, API_KEY, "metric");
+        Call<WeatherResponse> call = weatherService.getWeatherData(city, API_KEY, "imperial");
         call.enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
@@ -104,7 +104,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
                 .format(new Date());
         dateTime.setText("Date & Time: " + currentDateTime);
-        temperature.setText("Temperature: " + weatherData.main.temp + "°C");
+        temperature.setText("Temperature: " + weatherData.main.temp + "°F");
         weatherCondition.setText("Weather: " + weatherData.weather[0].main);
         humidity.setText("Humidity: " + weatherData.main.humidity + "%");
         wind.setText("Wind: " + weatherData.wind.speed + " m/s");
