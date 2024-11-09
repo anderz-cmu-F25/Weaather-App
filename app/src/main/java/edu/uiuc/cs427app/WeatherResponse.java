@@ -2,22 +2,23 @@ package edu.uiuc.cs427app;
 
 // API response format is here: https://openweathermap.org/current
 public class WeatherResponse {
-    public Main main;
-    public Wind wind;
-    public Weather[] weather;
     public String name;
+    public MainData main;
+    public WeatherData[] weather;
+    public WindData wind;
+    public int timezone;  // timezone offset in seconds from UTC
 
-    public class Main {
+    public static class MainData {
         public double temp;
         public int humidity;
     }
 
-    public class Wind {
-        public double speed;
-    }
-
-    public class Weather {
+    public static class WeatherData {
         public String main;
         public String description;
+    }
+
+    public static class WindData {
+        public double speed;
     }
 }

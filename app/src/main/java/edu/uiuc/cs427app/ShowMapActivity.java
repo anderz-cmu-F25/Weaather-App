@@ -29,25 +29,13 @@ import com.google.gson.reflect.TypeToken;
 public class ShowMapActivity extends AppCompatActivity implements View.OnClickListener {
     // Define SharedPreferences constants for saving user settings
     private static final String PREFS_NAME = "UserSettings";
-    private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
-
-    private String currentUsername; // Add this field
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Get username from intent
-        currentUsername = getIntent().getStringExtra("username");
-        if (currentUsername == null) {
-            // Fallback to shared preferences if not in intent
-            SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-            currentUsername = prefs.getString("lastLoggedInUser", "default");
-        }
-
-        // Load user-specific UI settings
+        // Load the selected UI settings (button and background color) from SharedPreferences
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
-        String backgroundColor = preferences.getString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "Default");
+        String backgroundColor = preferences.getString(BACKGROUND_COLOR_KEY, "Default");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map);
@@ -57,7 +45,6 @@ public class ShowMapActivity extends AppCompatActivity implements View.OnClickLi
 
         // Apply the saved background color to the layout
         MainActivity.applyBackgroundColor(backgroundColor, wxLayout);
-        MainActivity.applyButtonColors(this, buttonColor);
 
         String cityName = getIntent().getStringExtra("city");
         String currentUsername = getIntent().getStringExtra("username");
@@ -91,7 +78,7 @@ public class ShowMapActivity extends AppCompatActivity implements View.OnClickLi
         // Generate the map URL using the city's name
         String mapUrl = null;
         try {
-            mapUrl = String.format("https://www.google.com/maps/embed/v1/place?key=%s&q=%s", getApiKey(), URLEncoder.encode(cityName, StandardCharsets.UTF_8.name()));
+            mapUrl = String.format("https://www.google.com/maps/embed/v1/place?key=AIzaSyD_WTcRw-orxo_kRR-p0BbrWSsP2Zemorc&q=%s", getApiKey(), URLEncoder.encode(cityName, StandardCharsets.UTF_8.name()));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

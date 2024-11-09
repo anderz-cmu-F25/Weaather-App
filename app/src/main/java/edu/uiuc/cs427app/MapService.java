@@ -20,7 +20,7 @@ public class MapService extends AsyncTask<String, Void, City> {
     protected City doInBackground(String... strings) {
         try {
             // Make a GET request
-            String urlString = String.format("https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s", strings[0], strings[1]);
+            String urlString = String.format("https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=AIzaSyD_WTcRw-orxo_kRR-p0BbrWSsP2Zemorc", strings[0], strings[1]);
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
