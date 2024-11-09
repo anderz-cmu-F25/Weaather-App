@@ -29,13 +29,25 @@ import com.google.gson.reflect.TypeToken;
 public class ShowMapActivity extends AppCompatActivity implements View.OnClickListener {
     // Define SharedPreferences constants for saving user settings
     private static final String PREFS_NAME = "UserSettings";
+    private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
+
+    private String currentUsername; // Add this field
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Load the selected UI settings (button and background color) from SharedPreferences
+        // Get username from intent
+        currentUsername = getIntent().getStringExtra("username");
+        if (currentUsername == null) {
+            // Fallback to shared preferences if not in intent
+            SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+            currentUsername = prefs.getString("lastLoggedInUser", "default");
+        }
+
+        // Load user-specific UI settings
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String backgroundColor = preferences.getString(BACKGROUND_COLOR_KEY, "Default");
+        String buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
+        String backgroundColor = preferences.getString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "Default");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map);
@@ -45,6 +57,7 @@ public class ShowMapActivity extends AppCompatActivity implements View.OnClickLi
 
         // Apply the saved background color to the layout
         MainActivity.applyBackgroundColor(backgroundColor, wxLayout);
+        MainActivity.applyButtonColors(this, buttonColor);
 
         String cityName = getIntent().getStringExtra("city");
         String currentUsername = getIntent().getStringExtra("username");
