@@ -133,20 +133,25 @@ Tasks for next week may be adjusted after MS4 docs are reviewed.
 
 <b>Week 6</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: meduk2,nxie3,shijief2,shuqih3,yg11,keyuanc2
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: Updated Tasks as completed except LLMService and testing<br>
+Discussed challenges with google maps and openweather API key integration. <br>
+Consider hard coding if issues persist. Discussed open issue of map not displaying<br>
+properly - message from other team on campuswire and team 38 message to TA regarding issue<br>
+Seems to work on Mac M1/M2 architecture but not x86.  Will continue to research and test<br>
+but marked as complete as it works in later API.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| meduk2         |Met with team, agenda, timeline. Assisted where needed implemented some functionality gaps|continue testing toward completion of MS 4|
+| shuqinz2       |Completed MS3 video |Testing toward completion of MS 4|
+| nxie3          |Testing and feedback throughout the week|Continue testing toward completion of MS 4|
+| shijief2       |Completed CityActivity and WeatherActivity for MS 4|Continue testing toward completion of MS 4|
+| shuqih3        |Completed WeatherService|Continue working on LLMService, Testing toward completion of MS 4|
+| yg11           |Completed MapService and ShowMapActivity|Continue testing toward completion of MS 4|
+| keyuanc2       |Testing and feedback throughout the week|Continue testing toward completion of MS 4|
+| ryanef2        |Testing and feedback throughout the week|Continue testing toward completion of MS 4|
 </br>
 
 
