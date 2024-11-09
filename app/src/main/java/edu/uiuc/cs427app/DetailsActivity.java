@@ -50,8 +50,8 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         MainActivity.applyBackgroundColor(backgroundColor, detailsLayout);
 
         this.cityName = getIntent().getStringExtra("city");
-        String welcome = "Welcome to the " + this.cityName;
-        String cityWeatherInfo = "Detailed information about the weather of " + this.cityName;
+        String welcome = "Welcome to " + this.cityName + "!";
+        String cityWeatherInfo = "Detailed information about the weather and map of " + this.cityName + " can be found below.";
 
         TextView welcomeMessage = findViewById(R.id.welcomeText);
         TextView cityInfoMessage = findViewById(R.id.cityInfo);
