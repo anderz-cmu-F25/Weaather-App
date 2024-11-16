@@ -249,6 +249,18 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         if (view.getId() == R.id.wxAiButton) {
             // Handle button click
+            Intent intent = new Intent(this, WeatherInsightsActivity.class);
+            intent.putExtra("weatherData", getFormattedWeatherData());
+            startActivity(intent);
         }
     }
+
+    // Helper method to format weather data as a string
+    private String getFormattedWeatherData() {
+        return "Temperature: " + temperature.getText().toString() + ", " +
+                "Condition: " + weatherCondition.getText().toString() + ", " +
+                "Humidity: " + humidity.getText().toString() + ", " +
+                "Wind: " + wind.getText().toString();
+    }
+
 }
