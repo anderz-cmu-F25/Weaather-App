@@ -1,20 +1,17 @@
 package edu.uiuc.cs427app;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
 
 // weather insights activity, which uses llm service to display weather insights
-public class WeatherInsightsActivity extends AppCompatActivity  {
+public class WeatherInsightsActivity extends AppCompatActivity {
     private LinearLayout questionContainer;
     private TextView responseTextView;
-    private String weatherData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +21,18 @@ public class WeatherInsightsActivity extends AppCompatActivity  {
         questionContainer = findViewById(R.id.questionContainer);
         responseTextView = findViewById(R.id.responseTextView);
 
-        // Retrieve weather data from Intent
-        weatherData = getIntent().getStringExtra("weatherData");
+        // Get weather data from Intent
+        String weatherData = getIntent().getStringExtra("weatherData");
 
-        // Generate questions using LLMService
-        fetchQuestions();
-    }
+        // Initialize LLMService
+        String apiKey = "AIzaSyCx_NNsf1hpQFGkH2iHrOoCQwi2COGAgBI"; // TODO: Securely retrieve API key, instead of hardcoding it
+        LLMService llmService = new LLMService(apiKey);
 
-    private void fetchQuestions() {
-        LLMService llmService = new LLMService();
-        llmService.generateQuestions(weatherData, new LLMCallback() {
+        // Fetch questions
+        llmService.generateQuestions(weatherData, new LLMService.LLMCallback() {
             @Override
-            public void onQuestionsGenerated(List<String> questions) {
-                displayQuestions(questions);
+            public void onQuestionsGenerated(String[] questions) {
+                displayQuestions(questions, llmService, weatherData);
             }
 
             @Override
@@ -46,28 +42,26 @@ public class WeatherInsightsActivity extends AppCompatActivity  {
 
             @Override
             public void onError(String errorMessage) {
-                Log.e("WeatherInsightsActivity", "Error: " + errorMessage);
-                responseTextView.setText("Failed to load questions. Please try again.");
+                responseTextView.setText("Error: " + errorMessage);
             }
         });
     }
 
-    private void displayQuestions(List<String> questions) {
+    private void displayQuestions(String[] questions, LLMService llmService, String weatherData) {
         questionContainer.removeAllViews();
 
         for (String question : questions) {
             Button questionButton = new Button(this);
             questionButton.setText(question);
-            questionButton.setOnClickListener(v -> fetchAnswer(question));
+            questionButton.setOnClickListener(v -> fetchAnswer(llmService, question, weatherData));
             questionContainer.addView(questionButton);
         }
     }
 
-    private void fetchAnswer(String question) {
-        LLMService llmService = new LLMService();
-        llmService.generateAnswer(question, weatherData, new LLMCallback() {
+    private void fetchAnswer(LLMService llmService, String question, String weatherData) {
+        llmService.generateAnswer(question, weatherData, new LLMService.LLMCallback() {
             @Override
-            public void onQuestionsGenerated(List<String> questions) {
+            public void onQuestionsGenerated(String[] questions) {
                 // Not used here
             }
 
@@ -78,8 +72,7 @@ public class WeatherInsightsActivity extends AppCompatActivity  {
 
             @Override
             public void onError(String errorMessage) {
-                Log.e("WeatherInsightsActivity", "Error: " + errorMessage);
-                responseTextView.setText("Failed to fetch the answer. Please try again.");
+                responseTextView.setText("Error: " + errorMessage);
             }
         });
     }
