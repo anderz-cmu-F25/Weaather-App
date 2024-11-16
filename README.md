@@ -157,20 +157,20 @@ but marked as complete as it works in later API.
 
 <b>Week 7</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: meduk2,shuqinz2,nxie3,shuqih3,keyuanc2
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: Discussed wrap up of Milestone 4 and assignments of Milestone 5<br>
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| meduk2         |continue testing toward completion of MS 4, assisted where needed, implemented some functionality gaps|Manage milestone 5 assignments|
+| shuqinz2       |Completed testing toward completion of MS 4 |Complete MS4 video NLT 11/17, start work on MS5 assignment (Test User Logoff)|
+| nxie3          |Completed testing toward completion of MS 4|Start work on MS5 assignment (Test User Logon)|
+| shijief2       |Completed testing toward completion of MS 4|Start work on MS5 assignment (Test Weather Feature)|
+| shuqih3        |Completed LLM|Start work on MS5 assignment (Test Adding City)|
+| yg11           |Completed testing toward completion of MS 4|Start work on MS5 assignment (Test Location Feature)|
+| keyuanc2       |Completed testing toward completion of MS 4|Start work on MS5 assignment (Test User Signup)|
+| ryanef2        |Completed testing toward completion of MS 4|Start work on MS5 assignment (Test Removing Existing City)|
 </br>
 
 
