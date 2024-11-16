@@ -25,7 +25,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
+/**
+ * ShowMapActivity displays detailed information and a map view for a selected city.
+ * It retrieves user-specific UI settings for customization, applies them, and loads
+ * an interactive map using a WebView. The map displays the location of the selected city.
+ */
 public class ShowMapActivity extends AppCompatActivity implements View.OnClickListener {
     // Define SharedPreferences constants for saving user settings
     private static final String PREFS_NAME = "UserSettings";
@@ -34,6 +38,15 @@ public class ShowMapActivity extends AppCompatActivity implements View.OnClickLi
 
     private String currentUsername; // Add this field
 
+    /**
+     * Called when the activity is created. Initializes UI elements, retrieves user-specific
+     * preferences for button and background colors, and sets up the display for a selected
+     * city including city name, latitude/longitude coordinates, and an interactive map view.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously
+     *        being shut down, this Bundle contains the data it most recently supplied.
+     *        Otherwise, it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Get username from intent
@@ -104,6 +117,11 @@ public class ShowMapActivity extends AppCompatActivity implements View.OnClickLi
         webView.loadDataWithBaseURL(null, htmlContent, "text/html", "UTF-8", null);
     }
 
+    /**
+     * Retrieves the Google Maps API key from the application's metadata.
+     *
+     * @return The API key as a String, or an empty string if not found.
+     */
     private String getApiKey() {
         try {
             // Get the ApplicationInfo object
