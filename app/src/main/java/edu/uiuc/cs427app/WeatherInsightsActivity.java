@@ -11,6 +11,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+/**
+ * WeatherInsightsActivity displays weather insights for a user, allowing interaction
+ * with generated questions related to weather data. It applies user-specific theme
+ * settings, handles the retrieval of weather data, and integrates with an LLM service
+ * to generate and display questions and answers related to the weather data.
+ */
 public class WeatherInsightsActivity extends AppCompatActivity {
     private LinearLayout questionContainer;
     private TextView responseTextView;
@@ -20,6 +26,16 @@ public class WeatherInsightsActivity extends AppCompatActivity {
     private String currentUsername;
     private String buttonColor; // Store button color at class level
 
+    /**
+     * Called when the activity is first created. Initializes UI components,
+     * retrieves user-specific settings, applies themes, and fetches weather data
+     * passed via an Intent. Also sets up a Language Learning Model (LLM) service
+     * to generate and display weather-related questions.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *        previously being shut down, this Bundle contains the data it most
+     *        recently supplied. Otherwise, it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +95,14 @@ public class WeatherInsightsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Displays a list of questions as buttons in the UI. When a button is clicked,
+     * it triggers fetching an answer to the question using the LLM service.
+     *
+     * @param questions   The list of questions to be displayed.
+     * @param llmService  The LLM service used to generate answers.
+     * @param weatherData The weather data to provide context for the questions.
+     */
     private void displayQuestions(String[] questions, LLMService llmService, String weatherData) {
         questionContainer.removeAllViews();
 
@@ -107,6 +131,14 @@ public class WeatherInsightsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fetches an answer for the selected question using the LLM service.
+     * The result is displayed in the responseTextView.
+     *
+     * @param llmService  The LLM service used to generate the answer.
+     * @param question    The question selected by the user.
+     * @param weatherData The weather data to provide context for generating the answer.
+     */
     private void fetchAnswer(LLMService llmService, String question, String weatherData) {
         llmService.generateAnswer(question, weatherData, new LLMService.LLMCallback() {
             @Override

@@ -22,6 +22,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * ShowWeatherActivity class provides weather information about a city.
+ * It retrieves user preferences for UI customization and fetches and displays
+ * weather information (temperature, weather, humidity, wind condition). It also handles
+ * navigation to weather insights page based on user interaction.
+ */
 public class ShowWeatherActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String PREFS_NAME = "UserSettings";
     private static final String BUTTON_COLOR_KEY = "button_color";
@@ -58,6 +64,9 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     private String currentUsername;
     private TextView cityName, dateTime, temperature, weatherCondition, humidity, wind;
 
+    /**
+     * Initializes the activity, sets user-specific preferences, and configures UI elements.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         currentUsername = getIntent().getStringExtra("username");
@@ -150,6 +159,15 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         return formattedLocation.toString();
     }
 
+
+    /**
+     * Fetches weather data for the provided location input using the OpenWeatherMap API.
+     * The method formats the location input, creates a Retrofit instance to make a network
+     * request, and handles the API response asynchronously. If successful, the weather data
+     * is used to update the UI; otherwise, appropriate error handling is performed.
+     *
+     * @param locationInput The location (city) for which weather data is requested.
+     */
     private void fetchWeatherData(String locationInput) {
         try {
             String formattedLocation = formatLocationInput(locationInput);
@@ -248,6 +266,10 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         wind.setText("Wind: " + weatherData.wind.speed + " m/s");
     }
 
+    /**
+     * Handle the button click event when the wxAiButton was clicked.
+     * Create an Intent to navigate to the WeatherInsightsActivity.
+     */
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.wxAiButton) {

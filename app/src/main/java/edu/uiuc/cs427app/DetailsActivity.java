@@ -28,6 +28,16 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private String cityName;
     private String currentUsername; // Add this field
 
+    /**
+     * Called when the activity is first created. Initializes UI elements, sets up user-specific
+     * preferences for button and background colors, and configures buttons for navigation
+     * to weather and map activities. Retrieves the current username from an intent or
+     * SharedPreferences if not available in the intent.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously
+     *        being shut down, this Bundle contains the data it most recently supplied.
+     *        Otherwise, it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Get username from intent
@@ -68,6 +78,13 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         MainActivity.applyButtonColors(this, buttonColor, wxButton, buttonShowMap);
     }
 
+    /**
+     * Handles click events for buttons in the activity. Navigates to the appropriate
+     * activity (weather or map) based on the button that was clicked. Passes the selected
+     * city and username to the next activity.
+     *
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         Intent intent;

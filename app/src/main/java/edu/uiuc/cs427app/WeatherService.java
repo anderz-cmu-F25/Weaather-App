@@ -4,6 +4,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+/**
+ * To make HTTP requests to open weather map to fetch weather information
+ */
 public interface WeatherService {
 
     @GET("weather")
