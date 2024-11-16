@@ -46,6 +46,7 @@ public class CustomizeUIActivity extends AppCompatActivity {
         if (currentUsername == null) {
             currentUsername = "default"; // Fallback if no username provided
         }
+        getSupportActionBar().setTitle(getString(R.string.app_name_with_user, currentUsername));
 
         // Load user-specific settings using the username as part of the key
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
