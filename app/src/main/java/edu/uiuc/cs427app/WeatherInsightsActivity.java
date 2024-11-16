@@ -1,31 +1,63 @@
 package edu.uiuc.cs427app;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import android.view.View;
+import android.content.SharedPreferences;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-// weather insights activity, which uses llm service to display weather insights
 public class WeatherInsightsActivity extends AppCompatActivity {
     private LinearLayout questionContainer;
     private TextView responseTextView;
+    private static final String PREFS_NAME = "UserSettings";
+    private static final String BUTTON_COLOR_KEY = "button_color";
+    private static final String BACKGROUND_COLOR_KEY = "background_color";
+    private String currentUsername;
+    private String buttonColor; // Store button color at class level
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentUsername = getIntent().getStringExtra("username");
+        if (currentUsername == null) {
+            SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+            currentUsername = prefs.getString("lastLoggedInUser", "default");
+        }
+        getSupportActionBar().setTitle(getString(R.string.app_name_with_user, currentUsername));
+
         setContentView(R.layout.activity_show_weather_insights);
 
         questionContainer = findViewById(R.id.questionContainer);
         responseTextView = findViewById(R.id.responseTextView);
 
+        // Set responseTextView to be initially invisible
+        responseTextView.setVisibility(View.GONE);
+
+        // Load and apply user-specific theme settings
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
+        String backgroundColor = preferences.getString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "Default");
+
+        // Apply background color to main layout
+        ConstraintLayout mainLayout = findViewById(R.id.wxLayout);
+        MainActivity.applyBackgroundColor(backgroundColor, mainLayout);
+
+        // Ensure child layouts are transparent
+        LinearLayout llm = findViewById(R.id.llm);
+        llm.setBackgroundColor(Color.TRANSPARENT);
+        questionContainer.setBackgroundColor(Color.TRANSPARENT);
+        responseTextView.setBackgroundColor(Color.TRANSPARENT);
+
         // Get weather data from Intent
         String weatherData = getIntent().getStringExtra("weatherData");
 
         // Initialize LLMService
-        String apiKey = "AIzaSyCx_NNsf1hpQFGkH2iHrOoCQwi2COGAgBI"; // TODO: Securely retrieve API key, instead of hardcoding it
+        String apiKey = "AIzaSyCx_NNsf1hpQFGkH2iHrOoCQwi2COGAgBI"; // TODO: Securely retrieve API key
         LLMService llmService = new LLMService(apiKey);
 
         // Fetch questions
@@ -50,9 +82,26 @@ public class WeatherInsightsActivity extends AppCompatActivity {
     private void displayQuestions(String[] questions, LLMService llmService, String weatherData) {
         questionContainer.removeAllViews();
 
+        // Convert dp to pixels for margins
+        int marginInDp = 16; // You can adjust this value to increase/decrease spacing
+        float scale = getResources().getDisplayMetrics().density;
+        int marginInPixels = (int) (marginInDp * scale + 0.5f);
+
         for (String question : questions) {
             Button questionButton = new Button(this);
             questionButton.setText(question);
+
+            // Apply the button color theme
+            MainActivity.applyButtonColors(this, buttonColor, questionButton);
+
+            // Create layout parameters with margins
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 0, marginInPixels); // Left, Top, Right, Bottom margins
+            questionButton.setLayoutParams(params);
+
             questionButton.setOnClickListener(v -> fetchAnswer(llmService, question, weatherData));
             questionContainer.addView(questionButton);
         }
@@ -67,11 +116,13 @@ public class WeatherInsightsActivity extends AppCompatActivity {
 
             @Override
             public void onAnswerGenerated(String answer) {
+                responseTextView.setVisibility(responseTextView.VISIBLE);
                 responseTextView.setText(answer);
             }
 
             @Override
             public void onError(String errorMessage) {
+                responseTextView.setVisibility(responseTextView.VISIBLE);
                 responseTextView.setText("Error: " + errorMessage);
             }
         });

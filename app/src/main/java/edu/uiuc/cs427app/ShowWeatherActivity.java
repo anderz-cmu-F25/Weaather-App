@@ -66,6 +66,9 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
             currentUsername = prefs.getString("lastLoggedInUser", "default");
         }
 
+        //Set title to include the logged in username
+        getSupportActionBar().setTitle(getString(R.string.app_name_with_user, currentUsername));
+
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");
         String backgroundColor = preferences.getString(currentUsername + "_" + BACKGROUND_COLOR_KEY, "Default");

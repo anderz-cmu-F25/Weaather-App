@@ -44,6 +44,9 @@ public class ShowMapActivity extends AppCompatActivity implements View.OnClickLi
             currentUsername = prefs.getString("lastLoggedInUser", "default");
         }
 
+        //Set title to include the logged in username
+        getSupportActionBar().setTitle(getString(R.string.app_name_with_user, currentUsername));
+
         // Load user-specific UI settings
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String buttonColor = preferences.getString(currentUsername + "_" + BUTTON_COLOR_KEY, "Default");

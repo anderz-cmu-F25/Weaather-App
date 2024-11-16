@@ -5,13 +5,19 @@
     android:id="@+id/wxLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     tools:context=".ShowWeatherActivity">
 
     <LinearLayout
         android:id="@+id/llm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/responseTextView"
@@ -20,14 +26,19 @@
             android:text="Select a question to get an answer"
             android:textSize="20sp"
             android:padding="8dp"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:background="@android:color/transparent"/>
 
         <LinearLayout
             android:id="@+id/questionContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingTop="16dp"/>
+            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

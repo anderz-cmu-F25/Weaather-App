@@ -37,6 +37,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
             SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
             currentUsername = prefs.getString("lastLoggedInUser", "default");
         }
+        getSupportActionBar().setTitle(getString(R.string.app_name_with_user, currentUsername));
 
         // Load user-specific UI settings
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
