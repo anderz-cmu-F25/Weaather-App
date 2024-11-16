@@ -104,21 +104,27 @@ public class WeatherInsightsActivity extends AppCompatActivity {
      * @param weatherData The weather data to provide context for the questions.
      */
     private void displayQuestions(String[] questions, LLMService llmService, String weatherData) {
+        // Clear any existing views to prevent duplicate questions
         questionContainer.removeAllViews();
 
         // Convert dp to pixels for margins
-        int marginInDp = 16; // You can adjust this value to increase/decrease spacing
+        int marginInDp = 16;
         float scale = getResources().getDisplayMetrics().density;
         int marginInPixels = (int) (marginInDp * scale + 0.5f);
 
+        // Filter and display questions
         for (String question : questions) {
+            if (question == null || question.trim().isEmpty()) continue; // Skip null or empty questions
+
+            // Create a new Button for each question
             Button questionButton = new Button(this);
             questionButton.setText(question);
+            questionButton.setAllCaps(false); // Ensure text is not all caps for readability
 
             // Apply the button color theme
             MainActivity.applyButtonColors(this, buttonColor, questionButton);
 
-            // Create layout parameters with margins
+            // Create layout parameters with controlled margins
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -126,7 +132,15 @@ public class WeatherInsightsActivity extends AppCompatActivity {
             params.setMargins(0, 0, 0, marginInPixels); // Left, Top, Right, Bottom margins
             questionButton.setLayoutParams(params);
 
+            // Apply minimal padding and height to the button
+            questionButton.setPadding(0, 16, 0, 16); // Add some padding for better touch area
+            questionButton.setMinHeight(0);
+            questionButton.setMinimumHeight(0);
+
+            // Set click listener to fetch an answer when the button is clicked
             questionButton.setOnClickListener(v -> fetchAnswer(llmService, question, weatherData));
+
+            // Add the button to the question container
             questionContainer.addView(questionButton);
         }
     }

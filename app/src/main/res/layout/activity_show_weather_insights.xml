@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/wxLayout"
@@ -8,37 +9,48 @@
     android:background="@android:color/transparent"
     tools:context=".ShowWeatherActivity">
 
-    <LinearLayout
-        android:id="@+id/llm"
+    <!-- ScrollView to make the content scrollable -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/responseTextView"
+        <!-- Main container layout inside ScrollView -->
+        <LinearLayout
+            android:id="@+id/llm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select a question to get an answer"
-            android:textSize="20sp"
-            android:padding="8dp"
-            android:gravity="center_horizontal"
-            android:background="@android:color/transparent"/>
-
-        <LinearLayout
-            android:id="@+id/questionContainer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingTop="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    </LinearLayout>
+            <!-- TextView for response message -->
+            <TextView
+                android:id="@+id/responseTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select a question to get an answer"
+                android:textSize="20sp"
+                android:padding="8dp"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:background="@android:color/transparent" />
+
+            <!-- Container for dynamically added question buttons -->
+            <LinearLayout
+                android:id="@+id/questionContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@android:color/transparent" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
