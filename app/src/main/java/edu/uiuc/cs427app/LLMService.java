@@ -29,10 +29,12 @@ public class LLMService {
     /**
      * Generates context-specific questions based on the provided weather data.
      *
-     * @param prompt The prompt to be feeded into the Gemini LLM API.
+     * @param weatherData The prompt to be feeded into the Gemini LLM API.
      * @param callback The callback to handle generated questions.
      */
-    public void generateQuestions(String prompt, LLMCallback callback) {
+    public void generateQuestions(String weatherData, LLMCallback callback) {
+        String prompt = "Today's weather is " + weatherData +
+                ". Generate two questions related to daily decisions based on the weather.";
         Call<LLMResponse> call = llmApi.generateQuestions("Bearer " + API_KEY, new LLMRequest(prompt));
 
         call.enqueue(new Callback<LLMResponse>() {

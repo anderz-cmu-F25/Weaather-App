@@ -50,6 +50,10 @@
             android:name=".ShowWeatherActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".WeatherInsightsActivity"
+            android:exported="true" />
+
         <service
             android:name=".AuthenticatorService"
             android:exported="false">
