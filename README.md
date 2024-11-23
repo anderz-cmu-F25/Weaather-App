@@ -176,28 +176,29 @@ Meeting notes: Discussed wrap up of Milestone 4 and assignments of Milestone 5<b
 
 <b>Week 8</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: meduk2,shijief2,nxie3,keyuanc2,yg11
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: Discussed Mileston 5 assignments specifically key dates for updates/compleation as they pertain<br>
+to the fall break. No meeting 11/30 due to fall break.  Will resume regular cadence starting 12/1/24<br>
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| meduk2         |no updates to note|will engage with team via MS teams during break to see if anyone is working and needs help|
+| shuqinz2       |worked on MS5 assignment (Test User Logoff) |continue to work on MS5 assignment (Test User Logoff)|
+| nxie3          |worked on MS5 assignment (Test User Logon)|continue to work on MS5 assignment (Test User Logon)|
+| shijief2       |worked on MS5 assignment (Test Weather Feature)|Continue to work on MS5 assignment (Test Weather Feature)|
+| shuqih3        |worked on MS5 assignment (Test Adding City)|Continue to work on MS5 assignment (Test Adding City)|
+| yg11           |worked on MS5 assignment (Test Location Feature)|Continue to work on MS5 assignment (Test Location Feature)|
+| keyuanc2       |worked on MS5 assignment (Test User Signup)|Continue to work on MS5 assignment (Test User Signup)|
+| ryanef2        |worked on MS5 assignment (Test Removing Existing City)|Continue to work on MS5 assignment (Test Removing Existing City)|
 </br>
 
 
 <b>Week 9</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: N/A Fall Break no meeting scheduled for 11/30
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: 
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
