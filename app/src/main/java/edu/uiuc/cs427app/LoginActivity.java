@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import androidx.annotation.VisibleForTesting;
 
 /**
  * LoginActivity is responsible for handling user login and registration.
@@ -133,5 +134,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "An error occurred!" + e, Toast.LENGTH_SHORT).show();
             Log.e("LoginActivity", "An error occurred", e);
         }
+    }
+
+    @VisibleForTesting
+    public void setAuthenticationService(AuthenticationService service) {
+        this.authService = service;
     }
 }
