@@ -5,8 +5,16 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParentIndex;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasLength;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -17,6 +25,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -91,21 +100,37 @@ public class ShowWeatherTest {
         // Check that the city name is correct
         onView(withId(R.id.cityName)).check(matches(withText("New York")));
 
-        // Check that the weather details are not empty
-        onView(withId(R.id.dateTime)).check(matches(not(withText(""))));
-        onView(withId(R.id.temperature)).check(matches(not(withText(""))));
-        onView(withId(R.id.weatherCondition)).check(matches(not(withText(""))));
-        onView(withId(R.id.humidity)).check(matches(not(withText(""))));
-        onView(withId(R.id.wind)).check(matches(not(withText(""))));
-
         // Check that the weather details have actual values
-        onView(withId(R.id.dateTime)).check(matches(not(withText("Local Date & Time: "))));
-        onView(withId(R.id.temperature)).check(matches(not(withText("Temperature: "))));
-        onView(withId(R.id.weatherCondition)).check(matches(not(withText("Weather: "))));
-        onView(withId(R.id.humidity)).check(matches(not(withText("Humidity: "))));
-        onView(withId(R.id.wind)).check(matches(not(withText("Wind: "))));
+        onView(withId(R.id.dateTime)).check(matches(not(withText("")))).check(matches(not(withText("Local Date & Time: "))));
+        onView(withId(R.id.temperature)).check(matches(not(withText("")))).check(matches(not(withText("Temperature: "))));
+        onView(withId(R.id.weatherCondition)).check(matches(not(withText("")))).check(matches(not(withText("Weather: "))));
+        onView(withId(R.id.humidity)).check(matches(not(withText("")))).check(matches(not(withText("Humidity: "))));
+        onView(withId(R.id.wind)).check(matches(not(withText("")))).check(matches(not(withText("Wind: "))));
 
         Thread.sleep(1000);
+    }
+
+    @Test
+    public void showNewYorkCityWeatherInsight() throws InterruptedException {
+        onView(withText("New York")).perform(click());
+        onView(withText("Show Weather")).perform(click());
+        Thread.sleep(1000);
+        onView(withId(R.id.wxAiButton)).perform(click());
+
+        // Wait for LLM responses to load
+        Thread.sleep(1000);
+
+        // Check that at least one question is generated
+        onView(withId(R.id.questionContainer)).check(matches(hasMinimumChildCount(1)));
+        onView(allOf(isDescendantOfA(withId(R.id.questionContainer)), withParentIndex(0))).check(matches(not(withText("")))).perform(click());
+
+        // Wait for the answer to load
+        Thread.sleep(1000);
+
+        // Check that the answer is displayed
+        onView(withId(R.id.responseTextView)).check(matches(isDisplayed())).check(matches(not(withText(""))));
+
+        Thread.sleep(2000);
     }
 
     @Test
@@ -118,20 +143,36 @@ public class ShowWeatherTest {
         // Assert that the city name is correct
         onView(withId(R.id.cityName)).check(matches(withText("Champaign")));
 
-        // Check that the weather details are not empty
-        onView(withId(R.id.dateTime)).check(matches(not(withText(""))));
-        onView(withId(R.id.temperature)).check(matches(not(withText(""))));
-        onView(withId(R.id.weatherCondition)).check(matches(not(withText(""))));
-        onView(withId(R.id.humidity)).check(matches(not(withText(""))));
-        onView(withId(R.id.wind)).check(matches(not(withText(""))));
-
         // Check that the weather details have actual values
-        onView(withId(R.id.dateTime)).check(matches(not(withText("Local Date & Time: "))));
-        onView(withId(R.id.temperature)).check(matches(not(withText("Temperature: "))));
-        onView(withId(R.id.weatherCondition)).check(matches(not(withText("Weather: "))));
-        onView(withId(R.id.humidity)).check(matches(not(withText("Humidity: "))));
-        onView(withId(R.id.wind)).check(matches(not(withText("Wind: "))));
+        onView(withId(R.id.dateTime)).check(matches(not(withText("")))).check(matches(not(withText("Local Date & Time: "))));
+        onView(withId(R.id.temperature)).check(matches(not(withText("")))).check(matches(not(withText("Temperature: "))));
+        onView(withId(R.id.weatherCondition)).check(matches(not(withText("")))).check(matches(not(withText("Weather: "))));
+        onView(withId(R.id.humidity)).check(matches(not(withText("")))).check(matches(not(withText("Humidity: "))));
+        onView(withId(R.id.wind)).check(matches(not(withText("")))).check(matches(not(withText("Wind: "))));
         Thread.sleep(1000);
+    }
+
+    @Test
+    public void showChampaignWeatherInsight() throws InterruptedException {
+        onView(withText("Champaign")).perform(click());
+        onView(withText("Show Weather")).perform(click());
+        Thread.sleep(1000);
+        onView(withId(R.id.wxAiButton)).perform(click());
+
+        // Wait for LLM responses to load
+        Thread.sleep(1000);
+
+        // Check that at least one question is generated
+        onView(withId(R.id.questionContainer)).check(matches(hasMinimumChildCount(1)));
+        onView(allOf(isDescendantOfA(withId(R.id.questionContainer)), withParentIndex(0))).check(matches(not(withText("")))).perform(click());
+
+        // Wait for the answer to load
+        Thread.sleep(1000);
+
+        // Check that the answer is displayed
+        onView(withId(R.id.responseTextView)).check(matches(isDisplayed())).check(matches(not(withText(""))));
+
+        Thread.sleep(2000);
     }
 
     @Test
