@@ -53,6 +53,7 @@ suppress non relevant warnings
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String ENTER_CITY_NAME_HINT = "Type City Name Here";
     private static final String PREFS_NAME = "UserSettings";
     private static final String BUTTON_COLOR_KEY = "button_color";
     private static final String BACKGROUND_COLOR_KEY = "background_color";
@@ -326,6 +327,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setTitle("Add New City");
 
         final EditText input = new EditText(this);
+        input.setHint(ENTER_CITY_NAME_HINT);
         builder.setView(input);
 
         builder.setPositiveButton("Add", (dialog, which) -> {
