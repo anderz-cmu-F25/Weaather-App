@@ -65,9 +65,16 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.6.1'
 
     // Espresso for UI testing
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.6.1' // For testing intents
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.6.1' // For advanced views like RecyclerView
+    //androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    //androidTestImplementation 'androidx.test.espresso:espresso-intents:3.6.1' // For testing intents
+    //androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.6.1' // For advanced views like RecyclerView
+
+    // Espresso dependencies - Aligned versions
+    def espresso_version = "3.6.1"  // Use consistent Espresso version
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$espresso_version"
 
     // Mockito for mocking
     androidTestImplementation 'org.mockito:mockito-android:5.2.0'
