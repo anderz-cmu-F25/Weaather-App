@@ -55,7 +55,7 @@ public class LogoutTest {
      * Expects a success toast message to appear.
      */
     @Test
-    public void testLoginSuccess() {
+    public void testLogoutSuccess() {
         // Simulate user entering valid credentials and clicking the login button
         onView(withId(R.id.userName)).perform(replaceText("validUser"));
         onView(withId(R.id.password)).perform(replaceText("validPassword"));
